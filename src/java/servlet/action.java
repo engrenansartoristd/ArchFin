@@ -4,12 +4,18 @@
  */
 package servlet;
 
+import apoio.Hashing;
+import dao.UsuarioDAO;
+import entidade.Usuario;
+import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import java.security.NoSuchAlgorithmException;
 
 /**
  *
@@ -34,7 +40,7 @@ public class action extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet action</title>");            
+            out.println("<title>Servlet action</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet action at " + request.getContextPath() + "</h1>");
@@ -69,7 +75,43 @@ public class action extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        //processRequest(request, response);
+
+        System.out.println("Estou no POST");
+
+        String a = request.getParameter("a");
+
+        if (a.equals("login")) {
+            // logica do login
+            // pegar user
+            // pegar senha
+            // autenticar = verificar
+            // sucesso = vai pro sistema || erro = login de novo
+
+            String email = request.getParameter("email");
+            String senha = null;
+            
+            try {
+                senha = Hashing.digestSHA256(String.valueOf(request.getParameter("senha")));
+            } catch (NoSuchAlgorithmException e) {
+                System.out.println("Erro ao fazer hashing da senha");
+            }
+
+            System.out.println("email: " + email);
+            System.out.println("senha: " + senha);
+
+            Usuario usuario = new UsuarioDAO().autenticar(email, senha);
+
+            if (usuario != null) {
+                HttpSession sessao = request.getSession();
+                sessao.setAttribute("user", usuario);
+
+                encaminharPagina("barra_menu.jsp", request, response);
+            } else {
+                encaminharPagina("erro.jsp", request, response);
+            }
+        }
+
     }
 
     /**
@@ -81,5 +123,14 @@ public class action extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
+    
+    
+    private void encaminharPagina(String pagina, HttpServletRequest request, HttpServletResponse response) {
+        try {
+            RequestDispatcher rd = request.getRequestDispatcher(pagina);
+            rd.forward(request, response);
+        } catch (Exception e) {
+            System.out.println("Erro ao encaminhar: " + e);
+        }
+    }
 }
