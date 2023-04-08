@@ -5,7 +5,7 @@
 --%>
 
 <!DOCTYPE html>
-<html lang="en" style="color: var(--bs-indigo);">
+<html lang="pt-BR" style="color: var(--bs-indigo);">
 
     <head>
         <meta charset="utf-8">

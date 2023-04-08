@@ -64,14 +64,45 @@ public class action extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String a = request.getParameter("a");
-        
+
         if (a.equals("logout")) {
             HttpSession sessao = request.getSession();
             sessao.invalidate();
-            
+
             response.sendRedirect("index.jsp");
         }
+
+        if (a.equals("editarCliente")) {
+
+            int id = Integer.parseInt(request.getParameter("id"));
+
+            Cliente cliente = new ClienteDAO().consultarId(id);
+
+            if (cliente != null) {
+                request.setAttribute("cliente", cliente);
+
+                encaminharPagina("cadClientes.jsp", request, response);
+            } else {
+                encaminharPagina("erro.jsp", request, response);
+            }
+        }
         
+        if (a.equals("excluirCliente")) {
+
+            int id = Integer.parseInt(request.getParameter("id"));
+
+            String retorno = new ClienteDAO().excluir(id);
+
+            if (retorno == null) {
+                request.setAttribute("retorno", "Cliente excluído com sucesso!");
+                encaminharPagina("cadClientes.jsp", request, response);
+            } else {
+                request.setAttribute("retorno", "Erro ao excluir cliente!");
+                encaminharPagina("cadClientes.jsp", request, response);
+            }
+        }
+        
+
     }
 
     /**
@@ -100,7 +131,7 @@ public class action extends HttpServlet {
 
             String email = request.getParameter("email");
             String senha = null;
-            
+
             try {
                 senha = Hashing.digestSHA256(String.valueOf(request.getParameter("senha")));
             } catch (NoSuchAlgorithmException e) {
@@ -122,23 +153,36 @@ public class action extends HttpServlet {
                 encaminharPagina("index.jsp", request, response);
             }
         }
-        
+
         if (a.equals("cadastrarCliente")) {
             int id = Integer.parseInt(request.getParameter("id"));
             String nome = request.getParameter("nome");
             String email = request.getParameter("email");
             String rua = request.getParameter("rua");
             int numero = Integer.parseInt(request.getParameter("numero"));
-            String complemento = request.getParameter("complemento");
+            
+            String complemento = "";
+            if (request.getParameter("complemento") != null) {
+                complemento = request.getParameter("complemento");
+            }
+
             String cep = request.getParameter("cep");
             String bairro = request.getParameter("bairro");
             String cidade = request.getParameter("cidade");
             String uf = request.getParameter("uf");
-            String telefone_cel = request.getParameter("telefone_cel");
-            String telefone_fixo = request.getParameter("telefone_fixo");
+
+            String telefone_cel = "";
+            if (request.getParameter("telefone_cel") != null) {
+                telefone_cel = request.getParameter("telefone_cel");
+            }
+
+            String telefone_fixo = "";
+            if (request.getParameter("telefone_fixo") != null) {
+                telefone_fixo = request.getParameter("telefone_fixo");
+            }
+
             String cpf_cnpj = request.getParameter("cpf_cnpj");
 
-            
             Cliente cliente = new Cliente();
 
             cliente.setId(id);
@@ -154,21 +198,21 @@ public class action extends HttpServlet {
             cliente.setTelefone_cel(telefone_cel);
             cliente.setTelefone_fixo(telefone_fixo);
             cliente.setCpf_cnpj(cpf_cnpj);
-  
+
             String retorno = null;
 
             if (cliente.getId() == 0) { // insert                
                 retorno = new ClienteDAO().salvar(cliente);
-               
+
             } else {// update                
                 retorno = new ClienteDAO().atualizar(cliente);
             }
 
             if (retorno == null) {
-                request.setAttribute("retorno", "Registro salvo!");
+                request.setAttribute("retorno", "Cliente salvo com sucesso!");
                 encaminharPagina("cadClientes.jsp", request, response);
             } else {
-                request.setAttribute("retorno", "Erro ao salvar.");
+                request.setAttribute("retorno", "Erro ao salvar cliente!");
                 encaminharPagina("cadClientes.jsp", request, response);
             }
         }
@@ -184,8 +228,7 @@ public class action extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-    
-    
+
     private void encaminharPagina(String pagina, HttpServletRequest request, HttpServletResponse response) {
         try {
             RequestDispatcher rd = request.getRequestDispatcher(pagina);

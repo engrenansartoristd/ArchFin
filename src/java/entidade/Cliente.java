@@ -3,43 +3,21 @@ package entidade;
 
 import java.time.LocalDateTime;
 
-/*
-
-CREATE TABLE IF NOT EXISTS clientes (
-  id_cliente SERIAL NOT NULL,
-  nome VARCHAR(150) NULL,
-  email VARCHAR(45) NULL,
-  rua VARCHAR(50) NULL,
-  numero INT NULL,
-  complemento VARCHAR(45) NULL,
-  cep VARCHAR(45) NULL,
-  bairro VARCHAR(45) NULL,
-  cidade VARCHAR(45) NULL,
-  uf VARCHAR(45) NULL,
-  telefone_cel VARCHAR(45) NULL,
-  telefone_fixo VARCHAR(45) NULL,
-  cpf_cnpj VARCHAR(45) NULL,
-  data_alteracao TIMESTAMP DEFAULT NOW(),
-  PRIMARY KEY (id_cliente)
-);
-
-*/
-
 public class Cliente {
     
-    private int id;
-    private String nome;
-    private String email;
-    private String rua;
-    private int numero;    
-    private String complemento;
-    private String cep;
-    private String bairro;
-    private String cidade;
-    private String uf;
-    private String telefone_cel;
-    private String telefone_fixo;
-    private String cpf_cnpj;
+    private int id = 0;
+    private String nome = "";
+    private String email = "";
+    private String rua = "";
+    private int numero = 0;    
+    private String complemento = "";
+    private String cep = "";
+    private String bairro = "";
+    private String cidade = "";
+    private String uf = "";
+    private String telefone_cel = "";
+    private String telefone_fixo = "";
+    private String cpf_cnpj = "";
     private LocalDateTime data_alteracao;
 
     public int getId() {

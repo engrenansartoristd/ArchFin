@@ -4,8 +4,16 @@
         <servlet-name>action</servlet-name>
         <servlet-class>servlet.action</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>cliente</servlet-name>
+        <servlet-class>servlet.cliente</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>action</servlet-name>
         <url-pattern>/action</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>cliente</servlet-name>
+        <url-pattern>/cliente</url-pattern>
     </servlet-mapping>
 </web-app>

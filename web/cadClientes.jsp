@@ -9,7 +9,7 @@
 <%@page import="dao.ClienteDAO"%>
 <%@page import="java.util.ArrayList"%>
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
@@ -41,21 +41,21 @@
 
         <div class="container-fluid" style="padding-left: 30px;padding-bottom: 0px;margin-bottom: 10px;padding-right: 30px;">
             <div>
-                <h3 class="text-dark" style="padding-top: 18px;padding-bottom: 0px;margin-bottom: 11px;">Cadastro de Clientes</h3>
+                <h3 class="text-dark" style="padding-top: 18px;padding-bottom: 0px;margin-bottom: 11px; text-align: center;">Cadastro de Clientes</h3>
             </div>
             <form action="action?a=cadastrarCliente" name="formCadastro" method="post">
-                <div class="card" style="padding-bottom: 15px;">
+                <div class="card bg-light" style="padding-bottom: 15px; max-width: 1150px; margin: auto;">
                     <div class="card-header">
 
                         <%
                             if (!retorno.isEmpty()) {
                                 if (retorno.contains("Erro")) {
                         %>
-                        <div class="alert alert-danger text-center" role="alert"><span>Erro ao salvar registro!</span></div>
+                        <div class="alert alert-danger text-center" role="alert"><span><%= retorno%></span></div>
                         <%
                                 } else {
                         %>
-                        <div class="alert alert-success text-center" role="alert"><span>Registro salvo com sucesso!</span></div>
+                        <div class="alert alert-success text-center" role="alert"><span><%= retorno%></span></div>
                         <%
                                 }
                         %>
@@ -74,35 +74,70 @@
                         <div class="row">
                             <div class="col">
                                 <div style="padding-bottom: 15px;">
-                                    <label class="form-label">Nome*</label><input class="form-control" name="nome" type="text" required=""></div>
+                                    <label class="form-label">Nome*</label>
+                                    <input class="form-control" name="nome" type="text" value="<%= cliente.getNome()%>" required title="Por favor, preencha este campo obrigatório.">
+                                </div>
                             </div>
                             <div class="col">
-                                <div style="padding-bottom: 15px;"><label class="form-label">Email*</label><input class="form-control" name="email" type="email" required=""></div>
+                                <div style="padding-bottom: 15px;">
+                                    <label class="form-label">Email*</label>
+                                    <input class="form-control" name="email" type="email" value="<%= cliente.getEmail()%>" required title="Por favor, preencha este campo obrigatório.">
+                                </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-xl-3">
-                                <div style="padding-bottom: 15px;"><label class="form-label">CPF/CNPJ*</label><input class="form-control" name="cpf_cnpj" type="text" placeholder="&quot;000.000.000-00 / 00.000.000/0000-00&quot;" required="" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}|\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}"></div>
+                                <div style="padding-bottom: 15px;">
+                                    <label class="form-label">CPF/CNPJ*</label>
+                                    <input class="form-control" name="cpf_cnpj" type="text" placeholder="&quot;000.000.000-00 / 00.000.000/0000-00&quot;" value="<%= cliente.getCpf_cnpj()%>" required title="Por favor, preencha este campo obrigatório." pattern="\d{3}\.\d{3}\.\d{3}-\d{2}|\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}">
+                                </div>
                             </div>
                             <div class="col">
-                                <div><label class="form-label">Telefone Celular</label><input class="form-control" name="telefone_cel" type="tel"></div>
-                            </div>
+                                <div>
+                                    <label class="form-label">Telefone Celular</label>
+                                    <input class="form-control" name="telefone_cel" type="tel" value="<%= cliente.getTelefone_cel()%>">
+                                </div>
+                            </div> 
                             <div class="col">
-                                <div><label class="form-label">Telefone Fixo</label><input class="form-control" name="telefone_fixo" type="tel"></div>
+                                <div>
+                                    <label class="form-label">Telefone Fixo</label>
+                                    <input class="form-control" name="telefone_fixo" type="tel" value="<%= cliente.getTelefone_fixo()%>">
+                                </div>
                             </div>
                         </div>
                         <div class="row" style="padding: 0px;padding-right: 0px;padding-bottom: 15px;">
-                            <div class="col-xl-6"><label class="form-label">Rua*</label><input class="form-control" name="rua" type="text" required=""></div>
-                            <div class="col"><label class="form-label">Número*</label><input class="form-control" name="numero" type="text" required=""></div>
-                            <div class="col"><label class="form-label">Complemento</label><input class="form-control" name="complemento" type="text"></div>
+                            <div class="col-xl-6">
+                                <label class="form-label">Rua*</label>
+                                <input class="form-control" name="rua" type="text" value="<%= cliente.getRua()%>" required title="Por favor, preencha este campo obrigatório.">
+                            </div>
+                            <div class="col">
+                                <label class="form-label">Número*</label>
+                                <input class="form-control" name="numero" type="text" 
+                                       value="<% if (cliente.getNumero() != 0) {%> <%= cliente.getNumero()%> <% } %> " required title="Por favor, preencha este campo obrigatório.">
+                            </div>
+                            <div class="col">
+                                <label class="form-label">Complemento</label>
+                                <input class="form-control" name="complemento" type="text" value="<%= cliente.getComplemento()%>">
+                            </div>
                         </div>
                         <div class="row" style="padding-bottom: 15px;">
-                            <div class="col"><label class="form-label">Bairro*</label><input class="form-control" name="bairro" type="text" required=""></div>
-                            <div class="col"><label class="form-label">CEP*</label><input class="form-control" name="cep" type="text" required="" pattern="^\d{5}-?\d{3}$" placeholder="00000-000"></div>
+                            <div class="col">
+                                <label class="form-label">Bairro*</label>
+                                <input class="form-control" name="bairro" type="text" value="<%= cliente.getBairro()%>" required title="Por favor, preencha este campo obrigatório.">
+                            </div>
+                            <div class="col">
+                                <label class="form-label">CEP*</label>
+                                <input class="form-control" name="cep" type="text" value="<%= cliente.getCep()%>" required title="Por favor, preencha este campo obrigatório." pattern="^\d{5}-?\d{3}$" placeholder="00000-000">
+                            </div>
                         </div>
                         <div class="row">
-                            <div class="col"><label class="form-label">Cidade*</label><input class="form-control" name="cidade" type="text" required=""></div>
-                            <div class="col"><label class="form-label">Estado</label><select class="form-select" name="uf" required="">
+                            <div class="col">
+                                <label class="form-label">Cidade*</label>
+                                <input class="form-control"  name="cidade" type="text" value="<%= cliente.getCidade()%>" required title="Por favor, preencha este campo obrigatório.">
+                            </div>
+                            <div class="col">
+                                <label class="form-label">Estado*</label>
+                                <select class="form-select" name="uf" id="form-select-uf" required title="Por favor, preencha este campo obrigatório.">
                                     <option value="">Selecione um estado</option>
                                     <option value="AC">Acre</option>
                                     <option value="AL">Alagoas</option>
@@ -131,7 +166,12 @@
                                     <option value="SP">São Paulo</option>
                                     <option value="SE">Sergipe</option>
                                     <option value="TO">Tocantins</option>
-                                </select></div>
+                                </select>
+                                <script>
+                                    document.getElementById("form-select-uf").value = "<%= cliente.getUf().toUpperCase()%>";
+                                </script>
+                                
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -142,7 +182,7 @@
         <div class="container-fluid" style="padding-left: 30px; padding-right: 30px;">
             <div class="table-responsive">
                 <h3 style="text-align: center;">Lista de Clientes</h3>
-                <table class="table">
+                <table class="table table-striped">
                     <thead>
                         <tr>
                             <th style="font-size: 14px;font-weight: bold;">Id</th>
@@ -158,12 +198,12 @@
                             <th style="font-size: 14px;font-weight: bold;">CEP</th>
                             <th style="font-size: 14px;font-weight: bold;">UF</th>
                             <th style="font-size: 14px;font-weight: bold;"><strong>CPF/CNPJ</strong></th>
-                            <th style="font-size: 14px;font-weight: bold;">Editar</th>
-                            <th style="font-size: 14px;font-weight: bold;">Excluir</th>
+                            <th style="font-size: 14px;font-weight: bold;text-align: center;">Editar</th>
+                            <th style="font-size: 14px;font-weight: bold;text-align: center;">Excluir</th>
                         </tr>
                     </thead>
                     <tbody>
-                        
+
                         <%
                             ArrayList<Cliente> clientes = new ClienteDAO().consultarTodos();
                             
@@ -184,14 +224,22 @@
                             <td style="font-size: 14px;"><%= clientes.get(i).getCep()%></td>
                             <td style="font-size: 14px;"><%= clientes.get(i).getUf()%></td>
                             <td style="font-size: 14px;"><%= clientes.get(i).getCpf_cnpj()%></td>
-                            <td style="font-size: 14px;"><i class="fa fa-edit"></i></td>
-                            <td style="font-size: 14px;"><i class="fa fa-trash"></i></td>
+                            <td style="font-size: 14px;text-align: center;">
+                                <a class="btn btn-sm" role="button" href="action?a=editarCliente&id=<%= clientes.get(i).getId()%>">
+                                    <i class="fa fa-edit" data-bs-toggle="tooltip" title="Editar"></i>
+                                </a>
+                            </td>
+                            <td style="font-size: 14px;text-align: center;">
+                                <a class="btn btn-sm" role="button" href="action?a=excluirCliente&id=<%= clientes.get(i).getId()%>">
+                                    <i class="fa fa-trash" data-bs-toggle="tooltip" title="Excluir"></i>
+                                </a>
+                            </td>
                         </tr>
-                        
+
                         <%
                             }
                         %>
-                        
+
                     </tbody>
                 </table>
             </div>

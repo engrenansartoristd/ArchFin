@@ -7,7 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="entidade.Usuario"%>
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
     <head>
         <%
             HttpSession sessao = request.getSession();

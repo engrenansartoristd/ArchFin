@@ -47,12 +47,57 @@ public class ClienteDAO implements IDAOT<Cliente>{
 
     @Override
     public String atualizar(Cliente o) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try {
+            //Cria Statement para conexão com o banco de dados
+            Statement st = ConexaoBD.getInstance().getConnection().createStatement();
+            
+            String sql = "update clientes "
+                    + "set nome = '"+ o.getNome() +"', "
+                    + "email = '" + o.getEmail() + "', "
+                    + "rua = '" + o.getRua() + "', "
+                    + "numero = '" + o.getNumero() + "', "
+                    + "complemento = '" + o.getComplemento() + "', "
+                    + "cep = '" + o.getCep() + "', "
+                    + "bairro = '" + o.getBairro() + "', "
+                    + "cidade = '" + o.getCidade() + "', "
+                    + "uf = '" + o.getUf() + "', "
+                    + "telefone_cel = '" + o.getTelefone_cel() + "', "
+                    + "telefone_fixo = '" + o.getTelefone_fixo() + "', "
+                    + "cpf_cnpj = '" + o.getCpf_cnpj()+ "' "
+                    + "where id_cliente = " + o.getId();
+            
+            System.out.println("SQL: " + sql);
+            
+            st.executeUpdate(sql);
+            
+            return null;
+            
+        } catch (Exception e) {
+            System.err.println("Erro ao atualizar cliente: " + e);
+            return e.toString();
+        }
+        
     }
 
     @Override
     public String excluir(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try {
+            
+            Statement st = ConexaoBD.getInstance().getConnection().createStatement();
+            
+            String sql = "delete from clientes " 
+                    + "where id_cliente = " + id;
+            
+            System.out.println("SQL: " + sql);
+            
+            int retorno = st.executeUpdate(sql);
+            
+            return null;
+            
+        } catch (Exception e) {
+            System.err.println("Erro ao excluir cliente: " + e);
+            return e.toString();
+        }
     }
 
     @Override
@@ -105,7 +150,42 @@ public class ClienteDAO implements IDAOT<Cliente>{
 
     @Override
     public Cliente consultarId(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Cliente cliente = null;
+        
+        try {
+            
+            Statement st = ConexaoBD.getInstance().getConnection().createStatement();
+            
+            String sql = "select * "
+                    + "from clientes "
+                    + "where id_cliente = " + id;
+            
+            System.out.println("SQL: " + sql);
+            
+            ResultSet retorno = st.executeQuery(sql);
+            
+            while (retorno.next()) {
+                cliente = new Cliente();
+                cliente.setId(retorno.getInt("id_cliente"));
+                cliente.setNome(retorno.getString("nome"));
+                cliente.setEmail(retorno.getString("email"));
+                cliente.setRua(retorno.getString("rua"));
+                cliente.setNumero(Integer.parseInt(retorno.getString("numero")));
+                cliente.setComplemento(retorno.getString("complemento"));
+                cliente.setBairro(retorno.getString("bairro"));
+                cliente.setCidade(retorno.getString("cidade"));
+                cliente.setUf(retorno.getString("uf"));
+                cliente.setCep(retorno.getString("cep"));
+                cliente.setCpf_cnpj(retorno.getString("cpf_cnpj"));
+                cliente.setTelefone_cel(retorno.getString("telefone_cel"));
+                cliente.setTelefone_fixo(retorno.getString("telefone_fixo"));
+            }
+       
+        } catch (Exception e) {
+            System.err.println("Erro ao consultar cliente: " + e);
+        }
+        
+        return cliente;
     }
     
     
