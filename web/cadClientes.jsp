@@ -6,6 +6,8 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="entidade.Cliente"%>
+<%@page import="dao.ClienteDAO"%>
+<%@page import="java.util.ArrayList"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -15,6 +17,7 @@
         <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
         <link rel="stylesheet" href="assets/css/Login-Form-Basic-icons.css">
         <link rel="stylesheet" href="assets/css/Menu-dropdown-xl.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
     <body>
         <%@include file="menu.jsp"%>
@@ -36,7 +39,7 @@
 
 
 
-        <div class="container-fluid" style="padding-left: 0px;padding-bottom: 0px;margin-bottom: 499px;margin-left: 25px;padding-right: 50px;">
+        <div class="container-fluid" style="padding-left: 30px;padding-bottom: 0px;margin-bottom: 10px;padding-right: 30px;">
             <div>
                 <h3 class="text-dark" style="padding-top: 18px;padding-bottom: 0px;margin-bottom: 11px;">Cadastro de Clientes</h3>
             </div>
@@ -48,11 +51,11 @@
                             if (!retorno.isEmpty()) {
                                 if (retorno.contains("Erro")) {
                         %>
-                                    <div class="alert alert-danger text-center" role="alert"><span>Erro ao salvar registro!</span></div>
+                        <div class="alert alert-danger text-center" role="alert"><span>Erro ao salvar registro!</span></div>
                         <%
                                 } else {
                         %>
-                                    <div class="alert alert-success text-center" role="alert"><span>Registro salvo com sucesso!</span></div>
+                        <div class="alert alert-success text-center" role="alert"><span>Registro salvo com sucesso!</span></div>
                         <%
                                 }
                         %>
@@ -134,6 +137,64 @@
                 </div>
                 <div style="text-align: center;padding-top: 15px;"><button class="btn btn-primary" type="submit" style="text-align: center;margin-right: 2px;width: 140px;height: 51px;">Salvar</button></div>
             </form>
+        </div>
+
+        <div class="container-fluid" style="padding-left: 30px; padding-right: 30px;">
+            <div class="table-responsive">
+                <h3 style="text-align: center;">Lista de Clientes</h3>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th style="font-size: 14px;font-weight: bold;">Id</th>
+                            <th style="font-size: 14px;font-weight: bold;">Nome</th>
+                            <th style="font-size: 14px;font-weight: bold;">Email</th>
+                            <th style="font-size: 14px;font-weight: bold;">Telefone Celular</th>
+                            <th style="font-size: 14px;font-weight: bold;">Telefone Fixo</th>
+                            <th style="font-size: 14px;font-weight: bold;">Rua</th>
+                            <th style="font-size: 14px;font-weight: bold;">Numero</th>
+                            <th style="font-size: 14px;font-weight: bold;">Complemento</th>
+                            <th style="font-size: 14px;font-weight: bold;">Bairro</th>
+                            <th style="font-size: 14px;font-weight: bold;">Cidade</th>
+                            <th style="font-size: 14px;font-weight: bold;">CEP</th>
+                            <th style="font-size: 14px;font-weight: bold;">UF</th>
+                            <th style="font-size: 14px;font-weight: bold;"><strong>CPF/CNPJ</strong></th>
+                            <th style="font-size: 14px;font-weight: bold;">Editar</th>
+                            <th style="font-size: 14px;font-weight: bold;">Excluir</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                        <%
+                            ArrayList<Cliente> clientes = new ClienteDAO().consultarTodos();
+                            
+                            for (int i = 0; i < clientes.size(); i++) {
+                        %>
+
+                        <tr>
+                            <td style="font-size: 14px;"><%= clientes.get(i).getId()%></td>
+                            <td style="font-size: 14px;"><%= clientes.get(i).getNome()%></td>
+                            <td style="font-size: 14px;"><%= clientes.get(i).getEmail()%></td>
+                            <td style="font-size: 14px;"><%= clientes.get(i).getTelefone_cel()%></td>
+                            <td style="font-size: 14px;"><%= clientes.get(i).getTelefone_fixo()%></td>
+                            <td style="font-size: 14px;"><%= clientes.get(i).getRua()%></td>
+                            <td style="font-size: 14px;"><%= clientes.get(i).getNumero()%></td>
+                            <td style="font-size: 14px;"><%= clientes.get(i).getComplemento()%></td>
+                            <td style="font-size: 14px;"><%= clientes.get(i).getBairro()%></td>
+                            <td style="font-size: 14px;"><%= clientes.get(i).getCidade()%></td>
+                            <td style="font-size: 14px;"><%= clientes.get(i).getCep()%></td>
+                            <td style="font-size: 14px;"><%= clientes.get(i).getUf()%></td>
+                            <td style="font-size: 14px;"><%= clientes.get(i).getCpf_cnpj()%></td>
+                            <td style="font-size: 14px;"><i class="fa fa-edit"></i></td>
+                            <td style="font-size: 14px;"><i class="fa fa-trash"></i></td>
+                        </tr>
+                        
+                        <%
+                            }
+                        %>
+                        
+                    </tbody>
+                </table>
+            </div>
         </div>
         <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     </body>
