@@ -5,7 +5,9 @@
 package servlet;
 
 import apoio.Hashing;
+import dao.ClienteDAO;
 import dao.UsuarioDAO;
+import entidade.Cliente;
 import entidade.Usuario;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
@@ -61,7 +63,15 @@ public class action extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String a = request.getParameter("a");
+        
+        if (a.equals("logout")) {
+            HttpSession sessao = request.getSession();
+            sessao.invalidate();
+            
+            response.sendRedirect("index.jsp");
+        }
+        
     }
 
     /**
@@ -105,10 +115,61 @@ public class action extends HttpServlet {
             if (usuario != null) {
                 HttpSession sessao = request.getSession();
                 sessao.setAttribute("user", usuario);
-
-                encaminharPagina("barra_menu.jsp", request, response);
+                request.removeAttribute("msg");
+                encaminharPagina("inicio.jsp", request, response);
             } else {
-                encaminharPagina("erro.jsp", request, response);
+                request.setAttribute("msg", "Erro ao fazer login!");
+                encaminharPagina("index.jsp", request, response);
+            }
+        }
+        
+        if (a.equals("cadastrarCliente")) {
+            int id = Integer.parseInt(request.getParameter("id"));
+            String nome = request.getParameter("nome");
+            String email = request.getParameter("email");
+            String rua = request.getParameter("rua");
+            int numero = Integer.parseInt(request.getParameter("numero"));
+            String complemento = request.getParameter("complemento");
+            String cep = request.getParameter("cep");
+            String bairro = request.getParameter("bairro");
+            String cidade = request.getParameter("cidade");
+            String uf = request.getParameter("uf");
+            String telefone_cel = request.getParameter("telefone_cel");
+            String telefone_fixo = request.getParameter("telefone_fixo");
+            String cpf_cnpj = request.getParameter("cpf_cnpj");
+
+            
+            Cliente cliente = new Cliente();
+
+            cliente.setId(id);
+            cliente.setNome(nome);
+            cliente.setEmail(email);
+            cliente.setRua(rua);
+            cliente.setNumero(numero);
+            cliente.setComplemento(complemento);
+            cliente.setCep(cep);
+            cliente.setBairro(bairro);
+            cliente.setCidade(cidade);
+            cliente.setUf(uf);
+            cliente.setTelefone_cel(telefone_cel);
+            cliente.setTelefone_fixo(telefone_fixo);
+            cliente.setCpf_cnpj(cpf_cnpj);
+  
+            String retorno = null;
+
+            if (cliente.getId() == 0) { // insert                
+                retorno = new ClienteDAO().salvar(cliente);
+               
+            } else {// update                
+                retorno = new ClienteDAO().atualizar(cliente);
+            }
+
+            if (retorno == null) {
+                request.setAttribute("retorno", "Registro salvo!");
+                encaminharPagina("cadClientes.jsp", request, response);
+            } else {
+                request.setAttribute("retorno", "Erro ao salvar.");
+                encaminharPagina("cadClientes.jsp", request, response);
             }
         }
 

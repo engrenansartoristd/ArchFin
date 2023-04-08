@@ -15,10 +15,22 @@ public class ClienteDAO implements IDAOT<Cliente>{
             //Cria Statement para conexão com o banco de dados
             Statement st = ConexaoBD.getInstance().getConnection().createStatement();
             
-            String sql = "insert into cliente values(default, '"+ o.getNome() +"',"
+            String sql = "insert into clientes "
+                    + "(id_cliente, nome, email, rua, numero, "
+                    + "complemento, cep, bairro, cidade, uf, telefone_cel, telefone_fixo, cpf_cnpj) "
+                    + "values(default, "
+                    + "'"+ o.getNome() +"',"
                     + "'" + o.getEmail() + "', "
-                    + "'" + o.getCpf_cnpj()+ "', "
-                    + "'" + o.getTelefone_cel() + "')" ;
+                    + "'" + o.getRua() + "', "
+                    + "'" + o.getNumero() + "', "
+                    + "'" + o.getComplemento() + "', "
+                    + "'" + o.getCep() + "', "
+                    + "'" + o.getBairro() + "', "
+                    + "'" + o.getCidade() + "', "
+                    + "'" + o.getUf() + "', "
+                    + "'" + o.getTelefone_cel() + "', "
+                    + "'" + o.getTelefone_fixo() + "', "
+                    + "'" + o.getCpf_cnpj()+ "')";
             
             System.out.println("SQL: " + sql);
             

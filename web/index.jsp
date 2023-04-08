@@ -16,6 +16,20 @@
     </head>
 
     <body>
+        
+        <%
+            
+            //Verifica se foi gerado um erro 
+            String msg = (String) request.getAttribute("msg");
+
+            if (msg == null) {
+                msg = "";
+            }
+
+        %>
+        
+        
+        
         <section class="py-4 py-xl-5" style="color: var(--bs-blue);">
             <div class="container">
                 <div class="row mb-5">
@@ -38,6 +52,19 @@
                                 </form>
                             </div>
                         </div>
+                        
+                        <%
+                            if (!msg.isEmpty()) {
+                                
+                        %>
+                        <div class="alert alert-danger alert-dismissible" role="alert" style="color: var(--bs-black);text-align: center;background: rgb(255,55,73);">
+                            <button class="btn-close" type="button" aria-label="Close" data-bs-dismiss="alert"></button>
+                            <span style="text-align: center;"><strong>Email ou senha incorretos!</strong></span></div>
+                        
+                        <%
+                            }
+                         %>
+
                     </div>
                 </div>
             </div>
