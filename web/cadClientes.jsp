@@ -113,7 +113,7 @@
                             <div class="col">
                                 <label class="form-label">Número*</label>
                                 <input class="form-control" name="numero" type="text" 
-                                       value="<% if (cliente.getNumero() != 0) {%> <%= cliente.getNumero()%> <% } %> " required title="Por favor, preencha este campo obrigatório.">
+                                       value="<% if (cliente.getNumero() != 0) {%> <%= String.valueOf(cliente.getNumero()).replace(" ", "")%> <% } %> " required title="Por favor, preencha este campo obrigatório.">
                             </div>
                             <div class="col">
                                 <label class="form-label">Complemento</label>

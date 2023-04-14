@@ -40,7 +40,7 @@
                         <li class="nav-item dropdown"><a class="dropdown-toggle nav-link active" aria-expanded="false" data-bs-toggle="dropdown" href="#">Cadastros</a>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="cadClientes.jsp">Clientes</a>
-                                <a class="dropdown-item" href="#">Second Item</a>
+                                <a class="dropdown-item" href="cadCategorias.jsp">Categorias</a>
                                 <a class="dropdown-item" href="#">Third Item</a>
                             </div>
                         </li>
