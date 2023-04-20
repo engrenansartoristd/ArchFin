@@ -16,6 +16,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
         <title>ArchFin</title>
+        <link rel="shortcut icon" href="assets/ico/helmet.ico" type="image/x-icon">
         <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
         <link rel="stylesheet" href="assets/css/Login-Form-Basic-icons.css">
         <link rel="stylesheet" href="assets/css/Menu-dropdown-xl.css">
@@ -132,6 +133,5 @@
                 </table>
             </div>
         </div>
-        <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     </body>
 </html>

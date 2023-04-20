@@ -3,8 +3,9 @@
     Created on : Mar 30, 2023, 10:24:15 PM
     Author     : renan
 --%>
-
+<%@page import="entidade.Usuario"%>
 <!DOCTYPE html>
+
 <html lang="pt-BR" style="color: var(--bs-indigo);">
 
     <head>
@@ -13,10 +14,11 @@
         <title>ArchFin</title>
         <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
         <link rel="stylesheet" href="assets/css/Login-Form-Basic-icons.css">
+         <link rel="shortcut icon" href="assets/ico/helmet.ico" type="image/x-icon">
     </head>
 
     <body>
-        
+
         <%
             
             //Verifica se foi gerado um erro 
@@ -27,9 +29,9 @@
             }
 
         %>
-        
-        
-        
+
+
+
         <section class="py-4 py-xl-5" style="color: var(--bs-blue);">
             <div class="container">
                 <div class="row mb-5">
@@ -52,7 +54,7 @@
                                 </form>
                             </div>
                         </div>
-                        
+
                         <%
                             if (!msg.isEmpty()) {
                                 
@@ -60,10 +62,10 @@
                         <div class="alert alert-danger alert-dismissible" role="alert" style="color: var(--bs-black);text-align: center;background: rgb(255,55,73);">
                             <button class="btn-close" type="button" aria-label="Close" data-bs-dismiss="alert"></button>
                             <span style="text-align: center;"><strong>Email ou senha incorretos!</strong></span></div>
-                        
+
                         <%
                             }
-                         %>
+                        %>
 
                     </div>
                 </div>

@@ -4,6 +4,7 @@ package controle;
 import dao.ClienteDAO;
 import entidade.Cliente;
 import jakarta.servlet.http.HttpServletRequest;
+import apoio.Validacao;
 
 /**
  *
@@ -12,15 +13,57 @@ import jakarta.servlet.http.HttpServletRequest;
 public class ClienteControle {
     
     public String salvar(HttpServletRequest request){
-          
-        String retorno = new ClienteDAO().salvar(construirObjeto(request));
+        
+        Cliente cliente = construirObjeto(request);
+        
+        String cpf_cnpj = cliente.getCpf_cnpj();
+        
+        String retorno;
+        
+        boolean cpfValido = false;
+        
+        if (cpf_cnpj.length() > 14) {
+            cpfValido = Validacao.validarCNPJ(cpf_cnpj.replaceAll("[^\\d]", ""));
+        } else {
+            cpfValido = Validacao.validarCPF(cpf_cnpj.replaceAll("[^\\d]", ""));
+        }
+        
+        if (!cpfValido) {
+            retorno = "Erro ao inserir cliente: CPF ou CNPJ inválido!";
+            System.out.println(retorno);
+        } else {
+            retorno = new ClienteDAO().salvar(construirObjeto(request));
+        }
+
+       // String retorno = new ClienteDAO().salvar(construirObjeto(request));
         
         return retorno;
     }
     
     public String atualizar(HttpServletRequest request){
         
-        String retorno = new ClienteDAO().atualizar(construirObjeto(request));
+         Cliente cliente = construirObjeto(request);
+        
+        String cpf_cnpj = cliente.getCpf_cnpj();
+        
+        String retorno;
+        
+        boolean cpfValido = false;
+        
+        if (cpf_cnpj.length() > 14) {
+            cpfValido = Validacao.validarCNPJ(cpf_cnpj.replaceAll("[^\\d]", ""));
+        } else {
+            cpfValido = Validacao.validarCPF(cpf_cnpj.replaceAll("[^\\d]", ""));
+        }
+        
+        if (!cpfValido) {
+            retorno = "Erro ao inserir cliente: CPF ou CNPJ inválido!";
+            System.out.println(retorno);
+        } else {
+            retorno = new ClienteDAO().atualizar(construirObjeto(request));
+        }
+        
+        //String retorno = new ClienteDAO().atualizar(construirObjeto(request));
         
         return retorno;
     }

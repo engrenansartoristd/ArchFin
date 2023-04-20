@@ -173,9 +173,6 @@ public class action extends HttpServlet {
                 System.out.println("Erro ao fazer hashing da senha");
             }
 
-            System.out.println("email: " + email);
-            System.out.println("senha: " + senha);
-
             Usuario usuario = new UsuarioDAO().autenticar(email, senha);
 
             if (usuario != null) {

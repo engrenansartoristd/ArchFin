@@ -14,10 +14,11 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
         <title>ArchFin</title>
+        <link rel="shortcut icon" href="assets/ico/helmet.ico" type="image/x-icon">
         <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
         <link rel="stylesheet" href="assets/css/Login-Form-Basic-icons.css">
         <link rel="stylesheet" href="assets/css/Menu-dropdown-xl.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">        
     </head>
     <body>
         <%@include file="menu.jsp"%>
@@ -52,13 +53,13 @@
                                 if (retorno.contains("Erro")) {
                         %>
                         <div class="alert alert-danger text-center" role="alert"><span><%= retorno%></span></div>
-                        <%
-                                } else {
-                        %>
+                                <%
+                                        } else {
+                                %>
                         <div class="alert alert-success text-center" role="alert"><span><%= retorno%></span></div>
-                        <%
-                                }
-                        %>
+                                <%
+                                        }
+                                %>
 
                         <%
                             }
@@ -89,7 +90,22 @@
                             <div class="col-xl-3">
                                 <div style="padding-bottom: 15px;">
                                     <label class="form-label">CPF/CNPJ*</label>
-                                    <input class="form-control" name="cpf_cnpj" type="text" placeholder="&quot;000.000.000-00 / 00.000.000/0000-00&quot;" value="<%= cliente.getCpf_cnpj()%>" required title="Por favor, preencha este campo obrigatório." pattern="\d{3}\.\d{3}\.\d{3}-\d{2}|\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}">
+                                    <input class="form-control" name="cpf_cnpj" id="cpf_cnpj" type="text" value="<%= cliente.getCpf_cnpj()%>" required title="Por favor, preencha este campo obrigatório.">
+
+                                    <script>
+                                        document.getElementById('cpf_cnpj').addEventListener('input', function (e) {
+
+                                            let x = e.target.value.replace(/\D/g, '').match(/(\d{0,2})(\d{0,3})(\d{0,3})(\d{0,4})(\d{0,2})/);
+                                            e.target.value = !x[2] ? x[1] : x[1] + '.' + x[2] + (x[3] ? '.' : '') + x[3] + (x[4] ? '/' : x[4]) + x[4] + (x[5] ? '-' + x[5] : '');
+
+                                            if (e.target.value.length < 15) {
+                                                x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,3})(\d{0,2})/);
+                                                e.target.value = !x[2] ? x[1] : x[1] + '.' + x[2] + (x[3] ? '.' : '') + x[3] + (x[4] ? '-' + x[4] : '');
+                                            }
+
+                                            console.log('Com formatação: ' + e.target.value);
+                                        });
+                                    </script>
                                 </div>
                             </div>
                             <div class="col">
@@ -170,7 +186,7 @@
                                 <script>
                                     document.getElementById("form-select-uf").value = "<%= cliente.getUf().toUpperCase()%>";
                                 </script>
-                                
+
                             </div>
                         </div>
                     </div>
@@ -244,6 +260,5 @@
                 </table>
             </div>
         </div>
-        <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     </body>
 </html>
