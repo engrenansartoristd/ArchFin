@@ -183,9 +183,9 @@
                                     <option value="SE">Sergipe</option>
                                     <option value="TO">Tocantins</option>
                                 </select>
-                                <script>
-                                    document.getElementById("form-select-uf").value = "<%= cliente.getUf().toUpperCase()%>";
-                                </script>
+                                    <script>
+                                        document.getElementById("form-select-uf").value = "<%= cliente.getUf().toUpperCase()%>";
+                                    </script>
 
                             </div>
                         </div>

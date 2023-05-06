@@ -7,11 +7,14 @@ package servlet;
 import apoio.Hashing;
 import controle.CategoriaControle;
 import controle.ClienteControle;
+import controle.ProjetoControle;
 import dao.CategoriaDAO;
 import dao.ClienteDAO;
+import dao.ProjetoDAO;
 import dao.UsuarioDAO;
 import entidade.Categoria;
 import entidade.Cliente;
+import entidade.Projeto;
 import entidade.Usuario;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
@@ -137,6 +140,36 @@ public class action extends HttpServlet {
             }
         }
         
+        if (a.equals("editarProjeto")) {
+
+            int id = Integer.parseInt(request.getParameter("id"));
+
+            Projeto projeto = new ProjetoDAO().consultarId(id);
+
+            if (projeto != null) {
+                request.setAttribute("projeto", projeto);
+                encaminharPagina("cadProjetos.jsp", request, response);
+            } else {
+                request.setAttribute("retorno", "Erro ao consultar projeto!");
+                encaminharPagina("cadProjetos.jsp", request, response);
+            }
+        }
+        
+        if (a.equals("excluirProjeto")) {
+
+            int id = Integer.parseInt(request.getParameter("id"));
+
+            String retorno = new ProjetoDAO().excluir(id);
+
+            if (retorno == null) {
+                request.setAttribute("retorno", "Projeto excluído com sucesso!");
+                encaminharPagina("cadProjetos.jsp", request, response);
+            } else {
+                request.setAttribute("retorno", "Erro ao excluir projeto!");
+                encaminharPagina("cadProjetos.jsp", request, response);
+            }
+        }
+        
 
     }
 
@@ -206,6 +239,29 @@ public class action extends HttpServlet {
                 encaminharPagina("cadClientes.jsp", request, response);
             }
         }
+        
+        if (a.equals("cadastrarProjeto")) {
+            int id = Integer.parseInt(request.getParameter("id"));
+            
+            String retorno;
+
+            if (id == 0) { // insert                
+                retorno = new ProjetoControle().salvar(request);
+
+            } else {// update                
+                retorno = new ProjetoControle().atualizar(request);
+            }
+
+            if (retorno == null) {
+                request.setAttribute("retorno", "Projeto salvo com sucesso!");
+                encaminharPagina("cadProjetos.jsp", request, response);
+            } else {
+                request.setAttribute("retorno", "Erro ao salvar projeto!");
+                encaminharPagina("cadProjetos.jsp", request, response);
+            }
+        }
+        
+        
         
         if (a.equals("cadastrarCategoria")) {
             int id = Integer.parseInt(request.getParameter("id"));

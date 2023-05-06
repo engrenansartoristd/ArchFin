@@ -41,7 +41,7 @@
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="cadClientes.jsp">Clientes</a>
                                 <a class="dropdown-item" href="cadCategorias.jsp">Categorias</a>
-                                <a class="dropdown-item" href="#">Third Item</a>
+                                <a class="dropdown-item" href="cadProjetos.jsp">Projetos</a>
                             </div>
                         </li>
                     </ul>
