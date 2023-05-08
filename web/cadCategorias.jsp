@@ -91,7 +91,7 @@
         </div>
 
         <div class="container-fluid" style="padding-left: 30px; padding-right: 30px;">
-            <div class="table-responsive">
+            <div class="table-responsive" style="max-width: 1000px; margin: auto;">
                 <h3 style="text-align: center;">Lista de Categorias</h3>
                 <table class="table table-striped">
                     <thead>

@@ -25,6 +25,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 
 /**
  *
@@ -94,7 +95,7 @@ public class action extends HttpServlet {
                 encaminharPagina("cadClientes.jsp", request, response);
             }
         }
-        
+
         if (a.equals("excluirCliente")) {
 
             int id = Integer.parseInt(request.getParameter("id"));
@@ -109,7 +110,7 @@ public class action extends HttpServlet {
                 encaminharPagina("cadClientes.jsp", request, response);
             }
         }
-        
+
         if (a.equals("editarCategoria")) {
 
             int id = Integer.parseInt(request.getParameter("id"));
@@ -124,7 +125,7 @@ public class action extends HttpServlet {
                 encaminharPagina("cadCategorias.jsp", request, response);
             }
         }
-        
+
         if (a.equals("excluirCategoria")) {
 
             int id = Integer.parseInt(request.getParameter("id"));
@@ -139,7 +140,7 @@ public class action extends HttpServlet {
                 encaminharPagina("cadCategorias.jsp", request, response);
             }
         }
-        
+
         if (a.equals("editarProjeto")) {
 
             int id = Integer.parseInt(request.getParameter("id"));
@@ -154,7 +155,7 @@ public class action extends HttpServlet {
                 encaminharPagina("cadProjetos.jsp", request, response);
             }
         }
-        
+
         if (a.equals("excluirProjeto")) {
 
             int id = Integer.parseInt(request.getParameter("id"));
@@ -169,7 +170,35 @@ public class action extends HttpServlet {
                 encaminharPagina("cadProjetos.jsp", request, response);
             }
         }
-        
+
+        if (a.equals("pesquisarProjeto")) {
+            
+            
+
+            String cliente = null;
+            String categoria = null;
+            String data_inicio = null;
+            String data_fim = null;
+            
+            cliente = request.getParameter("cliente");
+            categoria = request.getParameter("categoria");
+            data_inicio = request.getParameter("data_inicio");
+            data_fim = request.getParameter("data_fim");
+
+            ArrayList<Projeto> projetos = new ProjetoControle().consultar(cliente, categoria, data_inicio, data_fim);
+
+            request.setAttribute("cliente", cliente);
+            request.setAttribute("categoria", categoria);
+            request.setAttribute("data_inicio", data_inicio);
+            request.setAttribute("data_fim", data_fim);
+
+            if (projetos != null) {
+                request.setAttribute("projetos", projetos);
+                encaminharPagina("listProjetos.jsp", request, response);
+            } else {
+                encaminharPagina("listProjetos.jsp", request, response);
+            }
+        }
 
     }
 
@@ -221,7 +250,7 @@ public class action extends HttpServlet {
 
         if (a.equals("cadastrarCliente")) {
             int id = Integer.parseInt(request.getParameter("id"));
-            
+
             String retorno;
 
             if (id == 0) { // insert                
@@ -239,10 +268,10 @@ public class action extends HttpServlet {
                 encaminharPagina("cadClientes.jsp", request, response);
             }
         }
-        
+
         if (a.equals("cadastrarProjeto")) {
             int id = Integer.parseInt(request.getParameter("id"));
-            
+
             String retorno;
 
             if (id == 0) { // insert                
@@ -260,9 +289,7 @@ public class action extends HttpServlet {
                 encaminharPagina("cadProjetos.jsp", request, response);
             }
         }
-        
-        
-        
+
         if (a.equals("cadastrarCategoria")) {
             int id = Integer.parseInt(request.getParameter("id"));
 

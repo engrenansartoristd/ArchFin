@@ -82,7 +82,6 @@ public class Formatacao {
         String dataFormatada = null;
         try {
             dataFormatada = new SimpleDateFormat("dd/MM/YYYY").format(data);
-            System.out.println(dataFormatada);
         } catch (Exception e) {
             System.err.println(e);
         }

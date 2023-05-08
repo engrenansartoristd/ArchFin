@@ -5,6 +5,7 @@ import apoio.Formatacao;
 import dao.ProjetoDAO;
 import entidade.Projeto;
 import jakarta.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 
 /**
  *
@@ -79,6 +80,30 @@ public class ProjetoControle {
         
         return retorno;
     }
+    
+    public ArrayList<Projeto> consultar(String cliente, String categoria, String dataInicio, String dataFim) {
         
+        String criterio = "";
+        
+        if (!cliente.equals("") ){
+            criterio = criterio + " and pr.id_cliente = " + cliente; 
+        } 
+        
+        if (!categoria.equals("") ){
+            criterio = criterio + " and pr.id_categoria = " + categoria;  
+        } 
+        
+        if (!dataInicio.equals("") ){
+            criterio = criterio + " and pr.data >= to_date('" + dataInicio + "', 'DD/MM/YYYY')";
+        } 
+        
+        if (!dataFim.equals("") ){
+            criterio = criterio + " and pr.data <= to_date('" + dataFim + "', 'DD/MM/YYYY')";
+        } 
+
+        ArrayList<Projeto>  projetos = new ProjetoDAO().consultar(criterio);
+        
+        return projetos;
+    }
     
 }

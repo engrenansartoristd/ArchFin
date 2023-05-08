@@ -128,7 +128,46 @@ public class ProjetoDAO implements IDAOT<Projeto> {
 
     @Override
     public ArrayList<Projeto> consultar(String criterio) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        ArrayList<Projeto> projetos = new ArrayList();
+
+        try {
+
+            Statement st = ConexaoBD.getInstance().getConnection().createStatement();
+
+            String sql = "select pr.id, pr.nome_projeto, pr.descricao, cl.nome as nome_cliente, pr.id_cliente, "
+                    + "cat.descricao as categoria, pr.id_categoria, pr.valor_contrato, pr.valor_pendente, pr.data "
+                    + "from projetos pr, clientes cl, categoria cat "
+                    + "where cl.id_cliente = pr.id_cliente and pr.id_categoria = cat.id "
+                    + criterio
+                    + " order by data desc";
+
+            System.out.println("SQL: " + sql);
+
+            ResultSet retorno = st.executeQuery(sql);
+
+            while (retorno.next()) {
+
+                Projeto projeto = new Projeto();
+
+                projeto.setId(retorno.getInt("id"));
+                projeto.setNomeProjeto(retorno.getString("nome_projeto"));
+                projeto.setDescricao(retorno.getString("descricao"));
+                projeto.setIdCliente(retorno.getInt("id_cliente"));
+                projeto.setIdCategoria(retorno.getInt("id_categoria"));
+                projeto.setNomeCliente(retorno.getString("nome_cliente"));
+                projeto.setNomeCategoria(retorno.getString("categoria"));
+                projeto.setValorContrato(retorno.getDouble("valor_contrato"));
+                projeto.setValorPendente(retorno.getDouble("valor_pendente"));
+                projeto.setData(Formatacao.formatarData(retorno.getDate("data")));
+
+                projetos.add(projeto);
+            }
+
+        } catch (Exception e) {
+            System.err.println("Erro ao consultar projeto: " + e);
+        }
+
+        return projetos;
     }
 
     @Override
@@ -176,7 +215,7 @@ public class ProjetoDAO implements IDAOT<Projeto> {
             String sql = "select pr.id, pr.nome_projeto, pr.descricao, cl.nome as nome_cliente, pr.id_cliente, "
                     + "cat.descricao as categoria, pr.id_categoria, pr.valor_contrato, pr.valor_pendente, pr.data "
                     + "from projetos pr, clientes cl, categoria cat "
-                    + "where cl.id_cliente = pr.id_cliente and pr.id_categoria = cat.id";
+                    + "where cl.id_cliente = pr.id_cliente and pr.id_categoria = cat.id order by data desc";
 
             System.out.println("SQL: " + sql);
 

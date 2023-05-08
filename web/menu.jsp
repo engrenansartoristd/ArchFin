@@ -1,7 +1,7 @@
-    <%-- 
-    Document   : barra_menu
-    Created on : Apr 6, 2023, 7:30:25 PM
-    Author     : renan
+<%-- 
+Document   : barra_menu
+Created on : Apr 6, 2023, 7:30:25 PM
+Author     : renan
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -16,8 +16,8 @@
                 response.sendRedirect("index.jsp");
             }
         
-         %>
-            
+        %>
+
 
 
 
@@ -36,14 +36,14 @@
                 <div class="collapse navbar-collapse flex-grow-0 order-md-first" id="navcol-6">
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item"><a class="nav-link active" href="inicio.jsp">Início</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#">Segundo Menu</a></li>
-                        <li class="nav-item dropdown"><a class="dropdown-toggle nav-link active" aria-expanded="false" data-bs-toggle="dropdown" href="#">Cadastros</a>
+                        <li class="nav-item"><a class="nav-link active" href="listProjetos.jsp">Projetos</a></li>
+                        <li class="nav-item dropdown"><a class="dropdown-toggle nav-link active" aria-expanded="false" data-bs-toggle="dropdown" href="#">Cadastrar</a>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="cadClientes.jsp">Clientes</a>
                                 <a class="dropdown-item" href="cadCategorias.jsp">Categorias</a>
                                 <a class="dropdown-item" href="cadProjetos.jsp">Projetos</a>
                             </div>
-                        </li>
+                        </li>   
                     </ul>
                     <div class="d-md-none my-2"><button class="btn btn-light me-2" type="button">Button</button><button class="btn btn-primary" type="button">Button</button></div>
                 </div>

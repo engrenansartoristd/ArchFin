@@ -194,14 +194,14 @@
         </div>
 
         <div class="container-fluid" style="padding-left: 30px; padding-right: 30px;">
-            <div class="table-responsive">
+            <div class="table-responsive" style="max-width: 1600px; margin: auto;">
                 <h3 style="text-align: center;">Lista de Projetos</h3>
                 <table class="table table-striped">
                     <thead>
                         <tr>
                             <th style="font-size: 14px;font-weight: bold;">Id</th>
                             <th style="font-size: 14px;font-weight: bold;">Nome</th>
-                            <th style="font-size: 14px;font-weight: bold;">Descrição</th>
+                            <th style="font-size: 14px;font-weight: bold; max-width: 200px;">Descrição</th>
                             <th style="font-size: 14px;font-weight: bold;">Data do Projeto</th>
                             <th style="font-size: 14px;font-weight: bold;">Cliente</th>
                             <th style="font-size: 14px;font-weight: bold;">Categoria</th>
@@ -222,7 +222,7 @@
                         <tr>
                             <td style="font-size: 14px;"><%= projetos.get(i).getId()%></td>
                             <td style="font-size: 14px;"><%= projetos.get(i).getNomeProjeto()%></td>
-                            <td style="font-size: 14px;"><%= projetos.get(i).getDescricao()%></td>
+                            <td style="font-size: 14px; max-width: 200px;"><%= projetos.get(i).getDescricao()%></td>
                             <td style="font-size: 14px;"><%= projetos.get(i).getData()%></td>
                             <td style="font-size: 14px;"><%= projetos.get(i).getIdCliente()%> - <%= projetos.get(i).getNomeCliente()%></td>
                             <td style="font-size: 14px;"><%= projetos.get(i).getIdCategoria()%> - <%= projetos.get(i).getNomeCategoria()%></td>
