@@ -7,6 +7,7 @@ package servlet;
 import apoio.Hashing;
 import controle.CategoriaControle;
 import controle.ClienteControle;
+import controle.ContaReceberControle;
 import controle.ProjetoControle;
 import dao.CategoriaDAO;
 import dao.ClienteDAO;
@@ -172,14 +173,12 @@ public class action extends HttpServlet {
         }
 
         if (a.equals("pesquisarProjeto")) {
-            
-            
 
             String cliente = null;
             String categoria = null;
             String data_inicio = null;
             String data_fim = null;
-            
+
             cliente = request.getParameter("cliente");
             categoria = request.getParameter("categoria");
             data_inicio = request.getParameter("data_inicio");
@@ -198,6 +197,16 @@ public class action extends HttpServlet {
             } else {
                 encaminharPagina("listProjetos.jsp", request, response);
             }
+        }
+
+        if (a.equals("cadContasReceber")) {
+
+            int id = Integer.parseInt(request.getParameter("id"));
+            
+            request.setAttribute("id", id);
+
+            encaminharPagina("cadContasReceber.jsp", request, response);
+
         }
 
     }
@@ -308,6 +317,27 @@ public class action extends HttpServlet {
             } else {
                 request.setAttribute("retorno", "Erro ao salvar categoria!");
                 encaminharPagina("cadCategorias.jsp", request, response);
+            }
+        }
+        
+        if (a.equals("cadastrarFaturas")) {
+            
+            String id_projeto = request.getParameter("id_projeto");
+            
+            
+            
+            System.out.println(id_projeto);
+            
+
+            String retorno = new ContaReceberControle().criarContasReceber(request);
+            if (retorno == null) {
+                request.setAttribute("id", id_projeto);
+                request.setAttribute("retorno", "Categoria salva com sucesso!");
+                encaminharPagina("cadContasReceber.jsp", request, response);
+            } else {
+                request.setAttribute("id", id_projeto);
+                request.setAttribute("retorno", "Erro ao salvar categoria!");
+                encaminharPagina("cadContasReceber.jsp", request, response);
             }
         }
 

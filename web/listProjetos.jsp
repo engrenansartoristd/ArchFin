@@ -126,7 +126,7 @@
                                             firstDay: 1
                                     });
                                     <% 
-                                    if ((dataInicio != null) && (dataInicio != "    ")){
+                                    if ((dataInicio != null) && (dataInicio != "")){
                                     %>
 
                                             const dataStr = "<%= dataInicio %>"; // string com a data no formato dd/mm/yyyy
@@ -181,7 +181,7 @@
     </form> 
 </div>
 
-<div class="container-fluid" style="padding-left: 30px; padding-right: 30px;">
+<div class="container-fluid" style="padding-left: 30px; padding-right: 30px; padding-top: 30px">
     <div class="table-responsive" style="max-width: 1600px; margin: auto;">
         <h3 style="text-align: center;">Lista de Projetos</h3>
         <table class="table table-striped">
@@ -196,7 +196,7 @@
                     <th style="font-size: 14px;font-weight: bold;">Valor do Contrato</th>
                     <th style="font-size: 14px;font-weight: bold;">Valor Pendente</th>
                     <th style="font-size: 14px;font-weight: bold;text-align: center;">Editar</th>
-                    <th style="font-size: 14px;font-weight: bold;text-align: center;">Excluir</th>
+                    <th style="font-size: 14px;font-weight: bold;text-align: center;">Faturas</th>
                 </tr>
             </thead>
             <tbody>
@@ -222,8 +222,8 @@
                         </a>
                     </td>
                     <td style="font-size: 14px;text-align: center;">
-                        <a class="btn btn-sm" role="button" href="action?a=excluirProjeto&id=<%= projetos.get(i).getId()%>">
-                            <i class="fa fa-trash" data-bs-toggle="tooltip" title="Excluir"></i>
+                        <a class="btn btn-sm" role="button" href="action?a=cadContasReceber&id=<%= projetos.get(i).getId()%>">
+                            <i class="fa fa-barcode" data-bs-toggle="tooltip" title="Faturas"></i>
                         </a>
                     </td>
                 </tr>
