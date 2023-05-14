@@ -105,14 +105,14 @@
                         </div>    
                         <div class="row">
                             <div class="col">
-                                <label class="form-label">De</label>
+                                <label class="form-label">De <span class="fa fa-calendar"></span> </label>
                                 <div class="input-group">
                                     <input class="form-control" id="calendario" name="data_inicio" type="text" autocomplete="off"/>
                                 </div>
                                 <script>
                                     $(function () {
-                                    $("#calendario").datepicker({
-                                    dateFormat: 'dd/mm/yy',
+                                        $("#calendario").datepicker({
+                                            dateFormat: 'dd/mm/yy',
                                             closeText: "Fechar",
                                             prevText: "&#x3C;Anterior",
                                             nextText: "Próximo&#x3E;",
@@ -124,15 +124,15 @@
                                             dayNamesMin: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"],
                                             weekHeader: "Sm",
                                             firstDay: 1
-                                    });
+                                        });
                                     <% 
                                     if ((dataInicio != null) && (dataInicio != "")){
                                     %>
 
-                                            const dataStr = "<%= dataInicio %>"; // string com a data no formato dd/mm/yyyy
-                                            const partesData = dataStr.split("/"); // divide a string em partes separadas por "/"
-                                            const data = new Date(partesData[2], partesData[1] - 1, partesData[0]); // cria o objeto Date com as partes da data
-                                            $("#calendario").datepicker("setDate", data);
+                                        const dataStr = "<%= dataInicio %>"; // string com a data no formato dd/mm/yyyy
+                                        const partesData = dataStr.split("/"); // divide a string em partes separadas por "/"
+                                        const data = new Date(partesData[2], partesData[1] - 1, partesData[0]); // cria o objeto Date com as partes da data
+                                        $("#calendario").datepicker("setDate", data);
                                     <% 
                                       }
                                     %>
@@ -140,7 +140,7 @@
                                 </script>
                             </div>
                             <div class="col">
-                                <label class="form-label">Até</label>
+                                <label class="form-label">Até <span class="fa fa-calendar"></span> </label>
                                 <input class="form-control" id="calendario_ate" name="data_fim" type="text"  autocomplete="off"/>
                                 <script>
                                     $(function () {
@@ -158,17 +158,17 @@
                                             weekHeader: "Sm",
                                             firstDay: 1
                                         });
-                                        <% 
+                                    <% 
                                              if ((dataFim != null) && (dataFim != "")){
-                                        %>
+                                    %>
 
-                                            const dataStr = "<%= dataFim %>"; // string com a data no formato dd/mm/yyyy
-                                            const partesData = dataStr.split("/"); // divide a string em partes separadas por "/"
-                                            const data = new Date(partesData[2], partesData[1] - 1, partesData[0]); // cria o objeto Date com as partes da data
-                                            $("#calendario_ate").datepicker("setDate", data);
-                                        <% 
+                                        const dataStr = "<%= dataFim %>"; // string com a data no formato dd/mm/yyyy
+                                        const partesData = dataStr.split("/"); // divide a string em partes separadas por "/"
+                                        const data = new Date(partesData[2], partesData[1] - 1, partesData[0]); // cria o objeto Date com as partes da data
+                                        $("#calendario_ate").datepicker("setDate", data);
+                                    <% 
                                         }
-                                        %>
+                                    %>
                                     });
 
                                 </script>
@@ -176,66 +176,65 @@
                         </div>    
                     </div>
                 </div>
+                <div style="text-align: center;padding-top: 15px;"><button class="btn btn-primary" type="submit" style="text-align: center;margin-right: 2px;width: 140px;height: 51px;">Pesquisar</button></div>
+            </form> 
         </div>
-        <div style="text-align: center;padding-top: 15px;"><button class="btn btn-primary" type="submit" style="text-align: center;margin-right: 2px;width: 140px;height: 51px;">Pesquisar</button></div>
-    </form> 
-</div>
 
-<div class="container-fluid" style="padding-left: 30px; padding-right: 30px; padding-top: 30px">
-    <div class="table-responsive" style="max-width: 1600px; margin: auto;">
-        <h3 style="text-align: center;">Lista de Projetos</h3>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th style="font-size: 14px;font-weight: bold;">Id</th>
-                    <th style="font-size: 14px;font-weight: bold;">Nome</th>
-                    <th style="font-size: 14px;font-weight: bold; max-width: 200px;">Descrição</th>
-                    <th style="font-size: 14px;font-weight: bold;">Data do Projeto</th>
-                    <th style="font-size: 14px;font-weight: bold;">Cliente</th>
-                    <th style="font-size: 14px;font-weight: bold;">Categoria</th>
-                    <th style="font-size: 14px;font-weight: bold;">Valor do Contrato</th>
-                    <th style="font-size: 14px;font-weight: bold;">Valor Pendente</th>
-                    <th style="font-size: 14px;font-weight: bold;text-align: center;">Editar</th>
-                    <th style="font-size: 14px;font-weight: bold;text-align: center;">Faturas</th>
-                </tr>
-            </thead>
-            <tbody>
+        <div class="container-fluid" style="padding-left: 30px; padding-right: 30px; padding-top: 30px">
+            <div class="table-responsive" style="max-width: 1600px; margin: auto;">
+                <h3 style="text-align: center;">Lista de Projetos</h3>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th style="font-size: 14px;font-weight: bold;">Id</th>
+                            <th style="font-size: 14px;font-weight: bold;">Nome</th>
+                            <th style="font-size: 14px;font-weight: bold; max-width: 200px;">Descrição</th>
+                            <th style="font-size: 14px;font-weight: bold;">Data do Projeto</th>
+                            <th style="font-size: 14px;font-weight: bold;">Cliente</th>
+                            <th style="font-size: 14px;font-weight: bold;">Categoria</th>
+                            <th style="font-size: 14px;font-weight: bold;">Valor do Contrato</th>
+                            <th style="font-size: 14px;font-weight: bold;">Valor Pendente</th>
+                            <th style="font-size: 14px;font-weight: bold;text-align: center;">Editar</th>
+                            <th style="font-size: 14px;font-weight: bold;text-align: center;">Faturas</th>
+                        </tr>
+                    </thead>
+                    <tbody>
 
-                <% 
-                    ArrayList<Projeto> projetos = (ArrayList<Projeto>) request.getAttribute("projetos");
-                    if (projetos != null) {
-                        for (int i = 0; i < projetos.size(); i++) {                                              
-                %>
+                        <% 
+                            ArrayList<Projeto> projetos = (ArrayList<Projeto>) request.getAttribute("projetos");
+                            if (projetos != null) {
+                                for (int i = 0; i < projetos.size(); i++) {                                              
+                        %>
 
-                <tr>
-                    <td style="font-size: 14px;"><%= projetos.get(i).getId()%></td>
-                    <td style="font-size: 14px;"><%= projetos.get(i).getNomeProjeto()%></td>
-                    <td style="font-size: 14px; max-width: 200px;"><%= projetos.get(i).getDescricao()%></td>
-                    <td style="font-size: 14px;"><%= projetos.get(i).getData()%></td>
-                    <td style="font-size: 14px;"><%= projetos.get(i).getIdCliente()%> - <%= projetos.get(i).getNomeCliente()%></td>
-                    <td style="font-size: 14px;"><%= projetos.get(i).getIdCategoria()%> - <%= projetos.get(i).getNomeCategoria()%></td>
-                    <td style="font-size: 14px;"><%= projetos.get(i).getValorContrato()%></td>
-                    <td style="font-size: 14px;"><%= projetos.get(i).getValorPendente()%></td>
-                    <td style="font-size: 14px;text-align: center;">
-                        <a class="btn btn-sm" role="button" href="action?a=editarProjeto&id=<%= projetos.get(i).getId()%>">
-                            <i class="fa fa-edit" data-bs-toggle="tooltip" title="Editar"></i>
-                        </a>
-                    </td>
-                    <td style="font-size: 14px;text-align: center;">
-                        <a class="btn btn-sm" role="button" href="action?a=cadContasReceber&id=<%= projetos.get(i).getId()%>">
-                            <i class="fa fa-barcode" data-bs-toggle="tooltip" title="Faturas"></i>
-                        </a>
-                    </td>
-                </tr>
+                        <tr>
+                            <td style="font-size: 14px;"><%= projetos.get(i).getId()%></td>
+                            <td style="font-size: 14px;"><%= projetos.get(i).getNomeProjeto()%></td>
+                            <td style="font-size: 14px; max-width: 200px;"><%= projetos.get(i).getDescricao()%></td>
+                            <td style="font-size: 14px;"><%= projetos.get(i).getData()%></td>
+                            <td style="font-size: 14px;"><%= projetos.get(i).getIdCliente()%> - <%= projetos.get(i).getNomeCliente()%></td>
+                            <td style="font-size: 14px;"><%= projetos.get(i).getIdCategoria()%> - <%= projetos.get(i).getNomeCategoria()%></td>
+                            <td style="font-size: 14px;"><%= projetos.get(i).getValorContrato()%></td>
+                            <td style="font-size: 14px;"><%= projetos.get(i).getValorPendente()%></td>
+                            <td style="font-size: 14px;text-align: center;">
+                                <a class="btn btn-sm" role="button" href="action?a=editarProjeto&id=<%= projetos.get(i).getId()%>">
+                                    <i class="fa fa-edit" data-bs-toggle="tooltip" title="Editar"></i>
+                                </a>
+                            </td>
+                            <td style="font-size: 14px;text-align: center;">
+                                <a class="btn btn-sm" role="button" href="action?a=cadContasReceber&id=<%= projetos.get(i).getId()%>">
+                                    <i class="fa fa-barcode" data-bs-toggle="tooltip" title="Faturas"></i>
+                                </a>
+                            </td>
+                        </tr>
 
-                <%
-                        }
-                    }
-                %>
+                        <%
+                                }
+                            }
+                        %>
 
-            </tbody>
-        </table>
-    </div>
-</div>
-</body>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
 </html>

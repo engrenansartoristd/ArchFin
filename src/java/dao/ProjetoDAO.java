@@ -245,5 +245,27 @@ public class ProjetoDAO implements IDAOT<Projeto> {
 
         return projetos;
     }
+    
+    public String atualizarValorPendente(int id, double valorPendente) {
+        try {
+            //Cria Statement para conexão com o banco de dados
+            Statement st = ConexaoBD.getInstance().getConnection().createStatement();
+
+            String sql = "update projetos "
+                    + "set valor_pendente = " + valorPendente + " "
+                    + "where id = " + id;
+
+            System.out.println("SQL: " + sql);
+
+            st.executeUpdate(sql);
+
+            return null;
+
+        } catch (Exception e) {
+            System.err.println("Erro ao atualizar cliente: " + e);
+            return e.toString();
+        }
+    }
+    
 
 }

@@ -5,6 +5,7 @@ package dao;
 import apoio.ConexaoBD;
 import apoio.Formatacao;
 import apoio.IDAOT;
+import entidade.AuxiliarContaReceber;
 import entidade.ContaReceber;
 import java.math.BigDecimal;
 import java.sql.ResultSet;
@@ -111,7 +112,46 @@ public class ContaReceberDAO implements IDAOT<ContaReceber> {
 
     @Override
     public ContaReceber consultarId(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
+        ContaReceber conta = new ContaReceber();
+        
+        try {
+
+            Statement st = ConexaoBD.getInstance().getConnection().createStatement();
+
+            String sql = "select * "
+                    + "from contas_receber "
+                    + "where id = " + id;
+
+            System.out.println("SQL: " + sql);
+
+            ResultSet retorno = st.executeQuery(sql);
+
+            while (retorno.next()) {
+                
+
+                conta.setId(retorno.getInt("id"));
+                conta.setIdProjeto(retorno.getInt("id_projeto"));
+                conta.setDataFatura(Formatacao.formatarData(retorno.getDate("data_fatura")));
+                conta.setDataVencimento(Formatacao.formatarData(retorno.getDate("data_vencimento")));
+                conta.setValorFatura(retorno.getDouble("valor_fatura"));
+                conta.setValorPendente(retorno.getDouble("valor_pendente"));
+                conta.setValorPago(retorno.getDouble("valor_pago"));
+                
+                Date dataVencimento = retorno.getDate("data_pagamento");
+                if (dataVencimento == null) {
+                    conta.setDataPagamento("");
+                } else {
+                    conta.setDataPagamento(Formatacao.formatarData(dataVencimento));
+                }
+                conta.setFaturaFechada(retorno.getBoolean("fatura_fechada"));
+            }
+
+        } catch (Exception e) {
+            System.err.println("Erro ao consultar contas a receber: " + e);
+        }
+
+        return conta;
     }
     
     public String cadastrarContas(BigDecimal[] valores, List<LocalDate> datasVencimento, int idProjeto) {
@@ -191,6 +231,120 @@ public class ContaReceberDAO implements IDAOT<ContaReceber> {
         }
 
         return contas;
+    }
+    
+    public ArrayList<AuxiliarContaReceber> consultarComFiltro(String criterio) {
+        ArrayList<AuxiliarContaReceber> contas = new ArrayList();
+
+        try {
+
+            Statement st = ConexaoBD.getInstance().getConnection().createStatement();
+
+            String sql = "select cr.*, pr.nome_projeto as nome_projeto, cl.nome as nome_cliente, "
+                    + "cat.descricao as categoria "
+                    + "from contas_receber cr, projetos pr, clientes cl, categoria cat "
+                    + " where cr.id_projeto = pr.id and pr.id_cliente = cl.id_cliente and pr.id_categoria = cat.id "
+                    + criterio
+                    + " order by cr.data_vencimento";
+            
+            /*
+            select cr.*, pr.nome_projeto as nome_projeto, cl.nome as nome_cliente, 
+            cat.descricao as categoria
+            from contas_receber cr, projetos pr, clientes cl, categoria cat
+            where cr.id_projeto = pr.id and pr.id_cliente = cl.id_cliente and pr.id_categoria = cat.id
+            and cr.data_vencimento <= to_date('31/05/2023', 'DD/MM/YYYY') and cr.data_vencimento >= to_date('01/10/2022', 'DD/MM/YYYY') 
+            order by cr.data_vencimento
+            */
+
+            System.out.println("SQL: " + sql);
+
+            ResultSet retorno = st.executeQuery(sql);
+
+            while (retorno.next()) {
+
+                AuxiliarContaReceber conta = new AuxiliarContaReceber();
+
+                conta.setId(retorno.getInt("id"));
+                conta.setIdProjeto(retorno.getInt("id_projeto"));
+                conta.setDataFatura(Formatacao.formatarData(retorno.getDate("data_fatura")));
+                conta.setDataVencimento(Formatacao.formatarData(retorno.getDate("data_vencimento")));
+                conta.setValorFatura(retorno.getDouble("valor_fatura"));
+                conta.setValorPendente(retorno.getDouble("valor_pendente"));
+                conta.setValorPago(retorno.getDouble("valor_pago"));    
+                
+                Date dataVencimento = retorno.getDate("data_pagamento");
+                if (dataVencimento == null) {
+                    conta.setDataPagamento("");
+                } else {
+                    conta.setDataPagamento(Formatacao.formatarData(dataVencimento));
+                }
+                
+                conta.setFaturaFechada(retorno.getBoolean("fatura_fechada"));
+                conta.setCategoria(retorno.getString("categoria"));
+                conta.setNomeCliente(retorno.getString("nome_cliente"));
+                conta.setNomeProjeto(retorno.getString("nome_projeto"));
+
+                contas.add(conta);
+            }
+
+        } catch (Exception e) {
+            System.err.println("Erro ao consultar conta: " + e);
+        }
+
+        return contas;
+    }
+    
+    public String cadastrarPagamento(int id, String dataPagamento, double valorPago, double valorPendente, boolean faturaFechada) {
+        try {
+            //Cria Statement para conexão com o banco de dados
+            Statement st = ConexaoBD.getInstance().getConnection().createStatement();
+            
+            String sql = "update contas_receber "
+                    + "set valor_pago = "+ valorPago +", "
+                    + "data_pagamento = to_date('" + dataPagamento + "', 'DD/MM/YYYY'), "
+                    + "valor_pendente = " + valorPendente + ", "
+                    + "fatura_fechada = " + faturaFechada + " "
+                    + "where id = " + id;
+            
+            System.out.println("SQL: " + sql);
+            
+            st.executeUpdate(sql);
+            
+            return null;
+            
+        } catch (Exception e) {
+            System.err.println("Erro ao atualizar pagamento: " + e);
+            return e.toString();
+        }
+    }
+    
+    public double consultaSomaValoresPagosProjeto(int id) {
+        
+        double soma = 0.0;
+
+        try {
+
+            Statement st = ConexaoBD.getInstance().getConnection().createStatement();
+
+            String sql = "select sum(valor_pago) as soma "
+                    + "from contas_receber "
+                    + "where id_projeto = " + id;
+
+            System.out.println("SQL: " + sql);
+
+            ResultSet retorno = st.executeQuery(sql);
+
+            while (retorno.next()) {
+
+                soma = retorno.getDouble("soma");
+            }
+
+        } catch (Exception e) {
+            System.err.println("Erro ao consultar soma de valores pagos: " + e);
+        }
+
+        return soma;
+        
     }
     
     

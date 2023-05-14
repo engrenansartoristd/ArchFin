@@ -13,6 +13,7 @@ import dao.CategoriaDAO;
 import dao.ClienteDAO;
 import dao.ProjetoDAO;
 import dao.UsuarioDAO;
+import entidade.AuxiliarContaReceber;
 import entidade.Categoria;
 import entidade.Cliente;
 import entidade.Projeto;
@@ -208,6 +209,34 @@ public class action extends HttpServlet {
             encaminharPagina("cadContasReceber.jsp", request, response);
 
         }
+        
+        
+        if (a.equals("pesquisarContas")) {
+
+            String cliente;
+            String situacao;
+            String dataInicio;
+            String dataFim;
+
+            cliente = request.getParameter("cliente");
+            situacao = request.getParameter("situacao");
+            dataInicio = request.getParameter("data_inicio");
+            dataFim = request.getParameter("data_fim");
+
+            ArrayList<AuxiliarContaReceber> contas = new ContaReceberControle().consultar(cliente, situacao, dataInicio, dataFim);
+
+            request.setAttribute("cliente", cliente);
+            request.setAttribute("situacao", situacao);
+            request.setAttribute("data_inicio", dataInicio);
+            request.setAttribute("data_fim", dataFim);
+
+            if (contas != null) {
+                request.setAttribute("contas", contas);
+                encaminharPagina("listContasReceber.jsp", request, response);
+            } else {
+                encaminharPagina("listContasReceber.jsp", request, response);
+            }
+        }
 
     }
 
@@ -323,21 +352,51 @@ public class action extends HttpServlet {
         if (a.equals("cadastrarFaturas")) {
             
             String id_projeto = request.getParameter("id_projeto");
-            
-            
-            
-            System.out.println(id_projeto);
-            
 
             String retorno = new ContaReceberControle().criarContasReceber(request);
             if (retorno == null) {
                 request.setAttribute("id", id_projeto);
-                request.setAttribute("retorno", "Categoria salva com sucesso!");
+                request.setAttribute("retorno", "Fatura salva com sucesso!");
                 encaminharPagina("cadContasReceber.jsp", request, response);
             } else {
                 request.setAttribute("id", id_projeto);
-                request.setAttribute("retorno", "Erro ao salvar categoria!");
+                request.setAttribute("retorno", "Erro ao salvar fatura!");
                 encaminharPagina("cadContasReceber.jsp", request, response);
+            }
+        }
+        
+        
+        if (a.equals("cadastrarPagamento")) {
+            
+            String cliente;
+            String situacao;
+            String dataInicio;
+            String dataFim;
+
+            cliente = request.getParameter("cliente");
+            situacao = request.getParameter("situacao");
+            dataInicio = request.getParameter("data_inicio");
+            dataFim = request.getParameter("data_fim");
+            
+            
+            //String id_projeto = request.getParameter("id_projeto");   
+            
+            
+            request.setAttribute("cliente", cliente);
+            request.setAttribute("situacao", situacao);
+            request.setAttribute("data_inicio", dataInicio);
+            request.setAttribute("data_fim", dataFim);
+
+            String retorno = new ContaReceberControle().cadastarPagamento(request);
+            
+            if (retorno == null) {
+                //request.setAttribute("id", id_projeto);
+                request.setAttribute("retorno", "Pagamento salvo com sucesso!");
+                encaminharPagina("listContasReceber.jsp", request, response);
+            } else {
+                //request.setAttribute("id", id_projeto);
+                request.setAttribute("retorno", "Erro ao salvar pagamento!");
+                encaminharPagina("listContasReceber.jsp", request, response);
             }
         }
 

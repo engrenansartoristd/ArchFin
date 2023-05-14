@@ -37,6 +37,7 @@ Author     : renan
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item"><a class="nav-link active" href="inicio.jsp">Início</a></li>
                         <li class="nav-item"><a class="nav-link active" href="listProjetos.jsp">Projetos</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="listContasReceber.jsp">Contas a Receber</a></li>
                         <li class="nav-item dropdown"><a class="dropdown-toggle nav-link active" aria-expanded="false" data-bs-toggle="dropdown" href="#">Cadastrar</a>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="cadClientes.jsp">Clientes</a>
