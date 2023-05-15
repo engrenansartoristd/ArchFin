@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.3.final using JasperReports Library version 6.20.3-415f9428cffdb6805c6f85bbb29ebaf18813a2ab  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Blank_A4" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ae1ea33e-1a98-4922-bbb6-9b62df3a0ddc">
+	<property name="com.jaspersoft.studio.data.sql.tables" value="cHJvamV0b3MgQVMgLDE1LDE1LDJjZjhmYjk3LTRkOTUtNDI4Mi1iODQ3LWVhZmU1OWNiMGI5Yzs="/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="479"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="521"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="db_archfin"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT id,
+	id_cliente,
+	valor_contrato,
+	valor_pendente
+FROM projetos]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="id"/>
+		<property name="com.jaspersoft.studio.field.label" value="id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="projetos"/>
+	</field>
+	<field name="id_cliente" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="id_cliente"/>
+		<property name="com.jaspersoft.studio.field.label" value="id_cliente"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="projetos"/>
+	</field>
+	<field name="valor_contrato" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="valor_contrato"/>
+		<property name="com.jaspersoft.studio.field.label" value="valor_contrato"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="projetos"/>
+	</field>
+	<field name="valor_pendente" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="valor_pendente"/>
+		<property name="com.jaspersoft.studio.field.label" value="valor_pendente"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="projetos"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="41" splitType="Stretch">
+			<textField>
+				<reportElement x="10" y="11" width="100" height="19" uuid="891eccc3-10c4-4079-b561-8e38b63a2bba"/>
+				<textFieldExpression><![CDATA[$F{id_cliente}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

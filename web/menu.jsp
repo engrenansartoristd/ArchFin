@@ -44,7 +44,8 @@ Author     : renan
                                 <a class="dropdown-item" href="cadCategorias.jsp">Categorias</a>
                                 <a class="dropdown-item" href="cadProjetos.jsp">Projetos</a>
                             </div>
-                        </li>   
+                        </li> 
+                        <li class="nav-item"><a class="nav-link active" href="relatorio.jsp">Relatorio</a></li>
                     </ul>
                     <div class="d-md-none my-2"><button class="btn btn-light me-2" type="button">Button</button><button class="btn btn-primary" type="button">Button</button></div>
                 </div>

@@ -7,13 +7,20 @@ import apoio.Formatacao;
 import apoio.IDAOT;
 import entidade.AuxiliarContaReceber;
 import entidade.ContaReceber;
+import entidade.SomaMensal;
 import java.math.BigDecimal;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.JasperRunManager;
 
 
 
@@ -345,6 +352,97 @@ public class ContaReceberDAO implements IDAOT<ContaReceber> {
 
         return soma;
         
+    }
+    
+    
+    public ArrayList<SomaMensal> consultaSomasMensais(int ano) {
+        
+         ArrayList<SomaMensal> somas = new ArrayList();
+        
+        try {
+
+            Statement st = ConexaoBD.getInstance().getConnection().createStatement();
+
+            String sql = "select * "
+                    + "from somas_mensais "
+                    + "where ano = " + ano;
+
+            System.out.println("SQL: " + sql);
+
+            ResultSet retorno = st.executeQuery(sql);
+
+            while (retorno.next()) {
+                SomaMensal soma = new SomaMensal();
+                
+                soma.setMes(retorno.getInt("mes"));
+                soma.setAno(retorno.getInt("ano"));
+                soma.setTotalFatura(retorno.getDouble("total_fatura"));
+                soma.setTotalPago(retorno.getDouble("total_pago"));
+                soma.setTotalPendente(retorno.getDouble("total_pendente"));
+                
+                somas.add(soma);
+                
+            }
+
+        } catch (Exception e) {
+            System.err.println("Erro ao consultar somas mensais: " + e);
+        }
+
+        return somas;
+        
+    }
+    
+    public ArrayList<SomaMensal> consultaSomasMensais() {
+        
+         ArrayList<SomaMensal> somas = new ArrayList();
+        
+        try {
+
+            Statement st = ConexaoBD.getInstance().getConnection().createStatement();
+
+            String sql = "select * "
+                    + "from somas_mensais";
+
+            System.out.println("SQL: " + sql);
+
+            ResultSet retorno = st.executeQuery(sql);
+
+            while (retorno.next()) {
+                SomaMensal soma = new SomaMensal();
+                
+                soma.setMes(retorno.getInt("mes"));
+                soma.setAno(retorno.getInt("ano"));
+                soma.setTotalFatura(retorno.getDouble("total_fatura"));
+                soma.setTotalPago(retorno.getDouble("total_pago"));
+                soma.setTotalPendente(retorno.getDouble("total_pendente"));
+                
+                somas.add(soma);
+                
+            }
+
+        } catch (Exception e) {
+            System.err.println("Erro ao consultar somas mensais: " + e);
+        }
+
+        return somas;
+        
+    }
+    
+    public byte[] gerarRelatorio() {
+        try {
+            Connection conn = ConexaoBD.getInstance().getConnection();
+
+            JasperReport relatorio = JasperCompileManager.compileReport(getClass().getResourceAsStream("/relatorios/Relatorio.jrxml"));
+
+            Map parameters = new HashMap();
+
+            byte[] bytes = JasperRunManager.runReportToPdf(relatorio, parameters, conn);
+
+            return bytes;
+        } catch (Exception e) {
+            System.out.println("erro ao gerar relatorio: " + e);
+            return null;
+        }
     }
     
     
