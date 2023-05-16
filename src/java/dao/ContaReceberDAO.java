@@ -428,13 +428,14 @@ public class ContaReceberDAO implements IDAOT<ContaReceber> {
         
     }
     
-    public byte[] gerarRelatorio() {
+    public byte[] gerarRelatorio(int ano) {
         try {
             Connection conn = ConexaoBD.getInstance().getConnection();
 
-            JasperReport relatorio = JasperCompileManager.compileReport(getClass().getResourceAsStream("/relatorios/Relatorio.jrxml"));
+            JasperReport relatorio = JasperCompileManager.compileReport(getClass().getResourceAsStream("/relatorios/relatorio_fat_previsto.jrxml"));
 
             Map parameters = new HashMap();
+            parameters.put("ano", ano);
 
             byte[] bytes = JasperRunManager.runReportToPdf(relatorio, parameters, conn);
 

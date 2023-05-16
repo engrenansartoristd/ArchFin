@@ -10,11 +10,19 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Relatório de Faturamento Mensal</title>
     </head>
     <body>
-        <%      
-            byte[] bytes = new ContaReceberDAO().gerarRelatorio();
+        <%  
+            
+            String ano = request.getParameter( "ano");
+            
+            if (ano == null || ano ==  ""){
+            ano = "2023";
+             }
+            
+            
+            byte[] bytes = new ContaReceberDAO().gerarRelatorio(Integer.parseInt(ano));
 
             response.setContentType("application/pdf");
             response.setContentLength(bytes.length);

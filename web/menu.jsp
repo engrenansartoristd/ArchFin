@@ -45,7 +45,11 @@ Author     : renan
                                 <a class="dropdown-item" href="cadProjetos.jsp">Projetos</a>
                             </div>
                         </li> 
-                        <li class="nav-item"><a class="nav-link active" href="relatorio.jsp">Relatorio</a></li>
+                        <li class="nav-item dropdown"><a class="dropdown-toggle nav-link active" aria-expanded="false" data-bs-toggle="dropdown" href="#">Relatórios</a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="selAnoRelatorio.jsp">Faturamento Mensal</a>
+                            </div>
+                        </li>
                     </ul>
                     <div class="d-md-none my-2"><button class="btn btn-light me-2" type="button">Button</button><button class="btn btn-primary" type="button">Button</button></div>
                 </div>

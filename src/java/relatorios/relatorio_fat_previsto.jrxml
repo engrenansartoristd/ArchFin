@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.3.final using JasperReports Library version 6.20.3-415f9428cffdb6805c6f85bbb29ebaf18813a2ab  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="relatorio_fat_previsto" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f9b81301-13c4-455f-a7bd-99fa8a4ebe64">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="db_archfin"/>
+	<parameter name="ano" class="java.lang.Integer"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT soma_fatura.*, COALESCE(soma_pago.total_pago, 0.0) as total_pago, soma_pendente.total_pendente 
+    FROM 
+        (SELECT EXTRACT(MONTH FROM data_vencimento) AS mes, EXTRACT(YEAR FROM data_vencimento) AS ano, SUM(valor_fatura) AS total_fatura
+        FROM contas_receber 
+        GROUP BY mes, ano) as soma_fatura
+    LEFT JOIN
+        (SELECT EXTRACT(MONTH FROM data_vencimento) AS mes, EXTRACT(YEAR FROM data_vencimento) AS ano, SUM(valor_pago) AS total_pago
+        FROM contas_receber 
+        GROUP BY mes, ano) as soma_pago
+        ON soma_pago.ano = soma_fatura.ano and soma_pago.mes = soma_fatura.mes
+    LEFT JOIN 
+        (SELECT EXTRACT(MONTH FROM data_vencimento) AS mes, EXTRACT(YEAR FROM data_vencimento) AS ano, SUM(valor_pendente) AS total_pendente
+        FROM contas_receber 
+        GROUP BY mes, ano) as soma_pendente
+        ON soma_pendente.ano = soma_fatura.ano and soma_pendente.mes = soma_fatura.mes
+        WHERE soma_fatura.ano =  $P{ano} 
+    ORDER BY soma_fatura.ano, soma_fatura.mes]]>
+	</queryString>
+	<field name="mes" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="mes"/>
+		<property name="com.jaspersoft.studio.field.label" value="mes"/>
+	</field>
+	<field name="ano" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="ano"/>
+		<property name="com.jaspersoft.studio.field.label" value="ano"/>
+	</field>
+	<field name="total_fatura" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="total_fatura"/>
+		<property name="com.jaspersoft.studio.field.label" value="total_fatura"/>
+	</field>
+	<field name="total_pago" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="total_pago"/>
+		<property name="com.jaspersoft.studio.field.label" value="total_pago"/>
+	</field>
+	<field name="total_pendente" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="total_pendente"/>
+		<property name="com.jaspersoft.studio.field.label" value="total_pendente"/>
+	</field>
+	<variable name="TotalPeriodoPrevisto" class="java.math.BigDecimal" resetType="Group" resetGroup="GroupAno" calculation="Sum">
+		<variableExpression><![CDATA[$F{total_fatura}]]></variableExpression>
+	</variable>
+	<variable name="TotalPeriodoPago" class="java.math.BigDecimal" resetType="Group" resetGroup="GroupAno" calculation="Sum">
+		<variableExpression><![CDATA[$F{total_pago}]]></variableExpression>
+	</variable>
+	<variable name="TotalPeriodoPendente" class="java.math.BigDecimal" resetType="Group" resetGroup="GroupAno" calculation="Sum">
+		<variableExpression><![CDATA[$F{total_pendente}]]></variableExpression>
+	</variable>
+	<group name="GroupAno">
+		<groupExpression><![CDATA[$F{ano}]]></groupExpression>
+		<groupFooter>
+			<band height="34">
+				<textField>
+					<reportElement x="161" y="3" width="100" height="20" uuid="8c95a1ea-4968-442e-9c4c-d19bba843675"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[java.text.NumberFormat.getCurrencyInstance(new Locale("pt","BR")).format($V{TotalPeriodoPrevisto})]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="0" y="0" width="543" height="1" uuid="eaf316d7-2e79-4cb0-bce4-df1245ea80db"/>
+				</line>
+				<staticText>
+					<reportElement x="10" y="3" width="60" height="19" uuid="6f38e6a7-382a-4574-8aa1-708d848147ec">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="025cf4c5-ef7e-4073-8932-cd28f5b0a865"/>
+					</reportElement>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Total]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="290" y="3" width="100" height="20" uuid="986c905f-b483-4818-bbf2-5a2ca55debf5"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[java.text.NumberFormat.getCurrencyInstance(new Locale("pt","BR")).format($V{TotalPeriodoPago})]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="408" y="3" width="100" height="20" uuid="8faf60fc-370c-4c6e-ba70-2e7307dc46a5"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[java.text.NumberFormat.getCurrencyInstance(new Locale("pt","BR")).format($V{TotalPeriodoPendente})]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="49" splitType="Stretch">
+			<staticText>
+				<reportElement x="200" y="0" width="160" height="40" uuid="5e111582-d40b-420f-88ee-ac60d83bc4b0"/>
+				<textElement textAlignment="Center">
+					<font size="16"/>
+				</textElement>
+				<text><![CDATA[Relatório Mensal de Faturamento]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="12" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="24" splitType="Stretch">
+			<staticText>
+				<reportElement x="11" y="0" width="60" height="19" uuid="c426545d-1887-48b5-b6b3-c6ea37d01be1">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="025cf4c5-ef7e-4073-8932-cd28f5b0a865"/>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ano]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="161" y="0" width="100" height="19" uuid="407cd152-7ec0-467d-8633-269df1cbca0b">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f671640d-74f8-452e-a6c6-ea44eb7becc5"/>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Previsto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="291" y="0" width="100" height="19" uuid="84281868-c0fd-46e6-a71d-313ebd96c540">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c4d71109-5026-4945-9a08-2a22c51c0835"/>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Pago]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="408" y="0" width="100" height="19" uuid="f7b811e3-f466-4e8a-8de0-75d99d128b32">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="59e4eecf-8704-40f9-815b-d4dde1f4a0e9"/>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Pendente]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="91" y="0" width="60" height="19" uuid="09342791-43e9-4db2-94c9-b6e373c49a17">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="025cf4c5-ef7e-4073-8932-cd28f5b0a865"/>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Mês]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="23" splitType="Stretch">
+			<textField>
+				<reportElement x="91" y="0" width="60" height="20" uuid="0b4d7237-254b-4d8a-843e-03eb300c4ee2">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="fa82a0d9-103d-45f0-8dca-b7dfa4d83365"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{mes}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="11" y="0" width="70" height="20" uuid="5f395882-300e-4b25-b9c3-463e216d3657">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="025cf4c5-ef7e-4073-8932-cd28f5b0a865"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{ano}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="161" y="0" width="120" height="20" uuid="be504679-ad9e-47e9-8846-f669c2ff3f90">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f671640d-74f8-452e-a6c6-ea44eb7becc5"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[java.text.NumberFormat.getCurrencyInstance(new Locale("pt","BR")).format($F{total_fatura})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="291" y="0" width="100" height="20" uuid="b3a1b271-f376-4bb7-8941-9cd4ca43747c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c4d71109-5026-4945-9a08-2a22c51c0835"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[java.text.NumberFormat.getCurrencyInstance(new Locale("pt","BR")).format($F{total_pago})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="408" y="0" width="110" height="20" uuid="1e2e7045-6f02-4764-af9a-d6034e2d7a44">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="59e4eecf-8704-40f9-815b-d4dde1f4a0e9"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[java.text.NumberFormat.getCurrencyInstance(new Locale("pt","BR")).format($F{total_pendente})]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="16" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField pattern="dd/MM/ yyyy">
+				<reportElement x="416" y="24" width="77" height="30" uuid="99c86220-a24e-4954-8a64-9b9cea89a926"/>
+				<textElement verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField pattern="HH:mm">
+				<reportElement x="494" y="24" width="80" height="30" uuid="437c70c2-b29d-49cc-bdb4-4c7a462b2386"/>
+				<textElement verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>
