@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.3.final using JasperReports Library version 6.20.3-415f9428cffdb6805c6f85bbb29ebaf18813a2ab  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="valores_recebidos_periodo" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="feaea6d0-c105-4bd8-924f-947e0fa15a78">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="db_archfin"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<parameter name="dataInicio" class="java.lang.String"/>
+	<parameter name="dataFim" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select cr.*, pr.nome_projeto as nome_projeto, cl.nome as nome_cliente,
+cat.descricao as categoria, cl.cpf_cnpj
+from contas_receber cr, projetos pr, clientes cl, categoria cat
+where cr.id_projeto = pr.id and pr.id_cliente = cl.id_cliente and pr.id_categoria = cat.id
+and data_pagamento >= to_date('$P!{dataInicio}', 'DD/MM/YYYY') and data_pagamento <= to_date('$P!{dataFim}', 'DD/MM/YYYY') 
+order by cr.data_pagamento
+]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="id"/>
+		<property name="com.jaspersoft.studio.field.label" value="id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="contas_receber"/>
+	</field>
+	<field name="id_projeto" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="id_projeto"/>
+		<property name="com.jaspersoft.studio.field.label" value="id_projeto"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="contas_receber"/>
+	</field>
+	<field name="data_fatura" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="data_fatura"/>
+		<property name="com.jaspersoft.studio.field.label" value="data_fatura"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="contas_receber"/>
+	</field>
+	<field name="data_vencimento" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="data_vencimento"/>
+		<property name="com.jaspersoft.studio.field.label" value="data_vencimento"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="contas_receber"/>
+	</field>
+	<field name="valor_fatura" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="valor_fatura"/>
+		<property name="com.jaspersoft.studio.field.label" value="valor_fatura"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="contas_receber"/>
+	</field>
+	<field name="valor_pendente" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="valor_pendente"/>
+		<property name="com.jaspersoft.studio.field.label" value="valor_pendente"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="contas_receber"/>
+	</field>
+	<field name="valor_pago" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="valor_pago"/>
+		<property name="com.jaspersoft.studio.field.label" value="valor_pago"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="contas_receber"/>
+	</field>
+	<field name="data_pagamento" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="data_pagamento"/>
+		<property name="com.jaspersoft.studio.field.label" value="data_pagamento"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="contas_receber"/>
+	</field>
+	<field name="fatura_fechada" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.name" value="fatura_fechada"/>
+		<property name="com.jaspersoft.studio.field.label" value="fatura_fechada"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="contas_receber"/>
+	</field>
+	<field name="nome_projeto" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nome_projeto"/>
+		<property name="com.jaspersoft.studio.field.label" value="nome_projeto"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="projetos"/>
+	</field>
+	<field name="nome_cliente" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nome_cliente"/>
+		<property name="com.jaspersoft.studio.field.label" value="nome_cliente"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="clientes"/>
+	</field>
+	<field name="categoria" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="categoria"/>
+		<property name="com.jaspersoft.studio.field.label" value="categoria"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="categoria"/>
+	</field>
+	<field name="cpf_cnpj" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="cpf_cnpj"/>
+		<property name="com.jaspersoft.studio.field.label" value="cpf_cnpj"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="clientes"/>
+	</field>
+	<variable name="Total" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{valor_pago}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="43" splitType="Stretch">
+			<staticText>
+				<reportElement x="321" y="0" width="160" height="40" uuid="014bf7a6-7138-4b48-ba5e-5999e534b20e"/>
+				<textElement textAlignment="Center">
+					<font size="16"/>
+				</textElement>
+				<text><![CDATA[Relatório de Contas Recebidas]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="40" splitType="Stretch">
+			<staticText>
+				<reportElement x="260" y="9" width="30" height="20" uuid="d8da91d1-dbf1-4c13-adda-a99ba063a9c5">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="025cf4c5-ef7e-4073-8932-cd28f5b0a865"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[De: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="290" y="9" width="110" height="20" uuid="2a84f610-e1e0-4c0c-a9bf-fd2f172e097f"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{dataInicio}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="440" y="9" width="40" height="20" uuid="4b9cf6d2-b6b9-42a3-8df7-72f4ccd30a5c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="025cf4c5-ef7e-4073-8932-cd28f5b0a865"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Até:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="480" y="9" width="100" height="20" uuid="5e3602e8-d9f9-4a58-9a74-3e7865c777a6"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{dataFim}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="21" splitType="Stretch">
+			<staticText>
+				<reportElement x="10" y="0" width="40" height="19" uuid="dd37a52d-1ff1-42b4-b253-9409a14ec781">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="025cf4c5-ef7e-4073-8932-cd28f5b0a865"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Id]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="238" y="2" width="181" height="19" uuid="647deea5-de6b-4485-bb80-b0f7988112b0">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f671640d-74f8-452e-a6c6-ea44eb7becc5"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nome do Cliente]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="58" y="-1" width="170" height="20" uuid="752def61-0e21-4cd1-854a-f22334782a2a">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="025cf4c5-ef7e-4073-8932-cd28f5b0a865"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nome do Projeto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="552" y="1" width="100" height="19" uuid="4c550f0b-b968-449b-870e-6f675b9c9dd3">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c4d71109-5026-4945-9a08-2a22c51c0835"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor Pago]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="431" y="1" width="90" height="19" uuid="1e1a3bf8-777a-46d6-a3ff-bf65a363cd7b">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="59e4eecf-8704-40f9-815b-d4dde1f4a0e9"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CPF/CNPJ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="662" y="1" width="120" height="19" uuid="cb90f7f5-fbf8-4054-b9e5-c86e4a5e709a">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c4d71109-5026-4945-9a08-2a22c51c0835"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data do Pagamento]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="24" splitType="Stretch">
+			<textField>
+				<reportElement x="10" y="3" width="40" height="16" uuid="28e5b21f-5780-4d16-84a0-6ca0073fbcfe">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e1adcab8-3791-4fd3-9a06-712be5c81c8c"/>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="58" y="3" width="170" height="16" uuid="de39f4e9-80ee-4c62-a98d-0430f1b8e30c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f02dbf8d-a4c8-474c-90c6-7a16c2bc5117"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{nome_projeto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="238" y="3" width="181" height="16" uuid="faef31d1-a9d9-4f47-a6cd-44623bbb2e0d">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c4ee82ce-95c2-4bb4-b2f7-733ca560954c"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{nome_cliente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="431" y="3" width="90" height="16" uuid="ddac5a7e-e160-40ec-98eb-9523865198ec">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="60544e6f-ac74-465d-a304-6e893add0d50"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{cpf_cnpj}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="552" y="3" width="100" height="16" uuid="c0c85b35-19bd-4cb3-a8ee-fc0c2f9138dc">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c8932bc8-48de-4e8d-ac73-ecc4d6ab3457"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[java.text.NumberFormat.getCurrencyInstance(new Locale("pt","BR")).format($F{valor_pago})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="662" y="3" width="118" height="16" uuid="8c3c1f8f-84d7-4f9d-a857-2b91b947fcb1">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c8932bc8-48de-4e8d-ac73-ecc4d6ab3457"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd/MM/yyyy").format($F{data_pagamento})
+]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="42" splitType="Stretch">
+			<textField>
+				<reportElement x="553" y="16" width="100" height="20" uuid="1623b673-aa8b-4a5a-b5cf-02d067039394"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[java.text.NumberFormat.getCurrencyInstance(new Locale("pt","BR")).format($V{Total})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="492" y="16" width="60" height="19" uuid="0bf229bb-d723-432c-8e22-07286c086378">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="025cf4c5-ef7e-4073-8932-cd28f5b0a865"/>
+				</reportElement>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total:]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="71" splitType="Stretch">
+			<textField pattern="HH:mm">
+				<reportElement x="710" y="30" width="70" height="30" uuid="ae8adb89-5e19-47ac-9c77-50deec780d60"/>
+				<textElement verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/ yyyy">
+				<reportElement x="640" y="30" width="70" height="30" uuid="9f69697d-3036-425a-98a4-0c4ac870043b"/>
+				<textElement verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

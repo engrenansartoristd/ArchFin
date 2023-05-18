@@ -4,9 +4,15 @@ import apoio.ConexaoBD;
 import apoio.Formatacao;
 import apoio.IDAOT;
 import entidade.Projeto;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.JasperRunManager;
 
 public class ProjetoDAO implements IDAOT<Projeto> {
 
@@ -264,6 +270,24 @@ public class ProjetoDAO implements IDAOT<Projeto> {
         } catch (Exception e) {
             System.err.println("Erro ao atualizar cliente: " + e);
             return e.toString();
+        }
+    }
+    
+    public byte[] gerarRelatorio(int ano) {
+        try {
+            Connection conn = ConexaoBD.getInstance().getConnection();
+
+            JasperReport relatorio = JasperCompileManager.compileReport(getClass().getResourceAsStream("/relatorios/projetos_categoria.jrxml"));
+
+            Map parameters = new HashMap();
+            parameters.put("ano", ano);
+
+            byte[] bytes = JasperRunManager.runReportToPdf(relatorio, parameters, conn);
+
+            return bytes;
+        } catch (Exception e) {
+            System.out.println("erro ao gerar relatorio: " + e);
+            return null;
         }
     }
     

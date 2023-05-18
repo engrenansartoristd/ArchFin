@@ -48,10 +48,11 @@ Author     : renan
                         <li class="nav-item dropdown"><a class="dropdown-toggle nav-link active" aria-expanded="false" data-bs-toggle="dropdown" href="#">Relatórios</a>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="selAnoRelatorio.jsp">Faturamento Mensal</a>
+                                <a class="dropdown-item" href="selPerRelatorio.jsp">Valores Recebidos por Período</a>
+                                <a class="dropdown-item" href="selAnoRelatorioProjetos.jsp">Quantidade de Projetos por Categoria</a>
                             </div>
                         </li>
                     </ul>
-                    <div class="d-md-none my-2"><button class="btn btn-light me-2" type="button">Button</button><button class="btn btn-primary" type="button">Button</button></div>
                 </div>
                 <div class="d-none d-md-block"><a class="btn btn-primary" role="button" href="action?a=logout">Sair</a></div>
             </div>
