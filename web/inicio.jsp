@@ -55,6 +55,8 @@
                 chart.draw(data, google.charts.Bar.convertOptions(options));
             }
         </script>
+        
+        
 
 
 
@@ -64,7 +66,7 @@
 
         <div id="columnchart_material" style="width: 1200px; height: 500px; margin: auto; padding-top: 50px"></div>
 
-
-
     </body>
+    
+    <%@include file="weather.jsp"%>        
 </html>

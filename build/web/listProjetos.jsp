@@ -180,7 +180,7 @@
             </form> 
         </div>
 
-        <div class="container-fluid" style="padding-left: 30px; padding-right: 30px; padding-top: 30px">
+        <div class="container-fluid" style="padding-left: 30px; padding-right: 30px; padding-top: 30px; padding-bottom: 50px" >
             <div class="table-responsive" style="max-width: 1600px; margin: auto;">
                 <h3 style="text-align: center;">Lista de Projetos</h3>
                 <table class="table table-striped">
@@ -236,5 +236,8 @@
                 </table>
             </div>
         </div>
+
     </body>
+
+
 </html>
