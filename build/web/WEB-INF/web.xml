@@ -8,6 +8,10 @@
         <servlet-name>cliente</servlet-name>
         <servlet-class>servlet.cliente</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ExportCSVServlet</servlet-name>
+        <servlet-class>servlet.ExportCSVServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>action</servlet-name>
         <url-pattern>/action</url-pattern>
@@ -15,5 +19,9 @@
     <servlet-mapping>
         <servlet-name>cliente</servlet-name>
         <url-pattern>/cliente</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ExportCSVServlet</servlet-name>
+        <url-pattern>/ExportCSVServlet</url-pattern>
     </servlet-mapping>
 </web-app>

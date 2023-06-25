@@ -51,7 +51,6 @@ public class ContaReceberControle {
     public ArrayList<AuxiliarContaReceber> consultar(String cliente, String faturaFechada, String dataInicio, String dataFim) {
         
         String criterio = "";
-        System.out.println(faturaFechada);
         
         if (!cliente.equals("") ){
             criterio = criterio + " and pr.id_cliente = " + cliente; 

@@ -38,7 +38,7 @@
             }
 
         %>
- 
+
 
         <%--
         
@@ -381,7 +381,14 @@
                     }
                 </script>
             </div>
-        </div>      
+            <div style="text-align: center;padding-top: 15px;">
+                <a href="ExportCSVServlet?a=exportContasReceber&cliente=<%= clienteId %>&situacao=<%= situacao %>&data_inicio=<%= dataInicio %>&data_fim=<%= dataFim %>" target="_blank">
+                <button class="btn btn-primary" id="exportButton" type="button" style="text-align: center;margin-right: 2px;width: 140px;height: 51px;">Exportar CSV</button>
+                </a>
+            </div>
+        </div>    
+
+
     </body>
 </html>
 
